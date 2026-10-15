@@ -1,237 +1,154 @@
 # 整合技術面分析與市場情緒之股票交易資訊平台
 
-大學專題。以台股十年、全市場的資料，檢驗「市場情緒」能不能預測股價，以及情緒應該怎麼放進一個「技術面＋情緒」的交易資訊平台。
+[English version below](#technical-analysis-and-market-sentiment-for-a-taiwan-stock-information-platform)
 
-- 最新報告簡報：[`slides/`](slides/)（`final_report_v*.pptx`，版本號最大者為最新）與白話講稿 `講稿_v*.md`
-- 完整研究紀錄（每項檢驗的設計、事先寫定的假說、數字）：[`docs/PROJECT_STATUS.md`](docs/PROJECT_STATUS.md)
-- 全部程式的用途與對應結果：[`code/INDEX.md`](code/INDEX.md)
+大學專題：以台股十年、全市場的資料，檢驗「市場情緒」能不能預測股價，以及情緒應該怎麼放進一個「技術面＋情緒」的交易資訊平台。
+後期每個檢驗都先把假設與通過門檻寫定，再在沒看過的股票或年份上驗證；通過與未通過都照實記錄。
 
----
+組員專案（PTT 開盤前討論量、大漲跌日的 LLM 歸因）：[jameschen108/tw-stock-sentiment](https://github.com/jameschen108/tw-stock-sentiment)
 
-## 目錄
+## 背景
 
-1. [一句話結論](#一句話結論)
-2. [起點：選讀論文與概念驗證](#起點選讀論文與概念驗證)
-3. [研究問題](#研究問題)
-4. [資料](#資料)
-5. [驗證原則](#驗證原則)
-6. [結果](#結果)
-7. [沒有通過的檢驗](#沒有通過的檢驗)
-8. [平台設計](#平台設計)
-9. [限制](#限制)
-10. [專案結構與重現方式](#專案結構與重現方式)
-11. [自動同步](#自動同步)
+- **選讀論文**：Jing, Wu & Wang（2021）*A hybrid model integrating deep learning with investor sentiment analysis for stock price prediction*，Expert Systems with Applications 178, 115019。用東方財富股吧 88 萬則貼文的情緒加上 16 項技術指標，以 LSTM 預測隔天收盤價，加入情緒後 MAPE 0.0675 → 0.0449。是本專題「技術面＋情緒雙軌整合」平台的依據。
+- **7 月概念驗證**：台積電 2330、PTT 133 篇／1.8 萬則留言、35 個交易日；流程跑通，動能指標與情緒同向（相關約 0.2），但樣本太少不能談預測。後續工作：資料拉長、驗證情緒的預測力。
 
----
+## 結論
 
-## 一句話結論
+| 研究 | 問題 | 結論 | 文件 |
+|---|---|---|---|
+| 一、重做選讀論文 | 加情緒能讓 LSTM 預測股價更準嗎？ | **不能**。台股 265 檔、十年：MAPE 13.24% → 13.08%（不顯著）；「今天收盤當明天」只有 1.22%，模型 0 檔贏過 | [01_replication.md](docs/01_replication.md) |
+| 二、散戶「說」的 | PTT／CMoney 情緒能預測隔天漲跌、報酬、波動、成交量嗎？ | **不能**。59.5% 留言在收盤後才發；換分類器、換平台、換股價來源、換目標都一樣；2025 樣本外殘留效果反轉 | [02_sentiment.md](docs/02_sentiment.md) |
+| 三、散戶「做」的 | 融資融券、散戶成交比重有預測力嗎？ | **有，但很小**。全市場 1,144 檔每一年都讓漲跌預測變準（ΔAUC +0.003），沒被挑進樣本的 879 檔一樣；散戶持股多的股票更明顯 | [03_retail_trading.md](docs/03_retail_trading.md) |
+| 四、大波動日 | 大漲大跌是什麼在影響？之後怎麼走？ | **公告與新聞方向可預期**（265 檔歸納、889 檔驗證全過），但多在隔天開盤就反應完；超過一半的大波動日找不到消息；**沒消息又沒鎖漲停的大漲之後平均回吐**（24 年幾乎每年） | [04_large_moves.md](docs/04_large_moves.md) |
+| 五、公司事件 | 庫藏股、減資等事件公告後怎麼走？ | 庫藏股公告後續漲（2001–2013 驗證 +1.23%，t=5.9），但扣成本後贏不了大盤 | [05_events.md](docs/05_events.md) |
+| 六、交易頻率 | 拉長持有時間，扣成本後還剩多少？ | 日頻全 ≤ 0、週頻剩一點；**月頻技術面＋散戶行為選股扣成本後每月贏一般股票 0.63%（t=2.9），年化 22%**，但相對加權指數不顯著；文字類資訊在任何時間尺度都加不上去 | [06_holding_period.md](docs/06_holding_period.md) |
+| 七、大盤層級 | 盤中、盤後情緒與細分情緒指數 | 恐慌指數在股災時準確升高（描述力好）；盤中反指標顯著但只有 1 bp；重測 2025 論文，控制美股後情緒增量幾乎消失；情緒當「開關」大半是市場狀態的影子 | [07_market_level.md](docs/07_market_level.md) |
 
-情緒指標（PTT、CMoney、媒體新聞、公司公告、隔夜漲幅）**方向都對、統計上顯著**，但市場反應得比讀者快，看到再進場、扣掉成本就沒有了。扣成本後還有用的，是**散戶實際的交易行為（融資融券）加技術面、持有一個月**的選股。情緒的價值在**描述與提醒**，這決定了平台的設計。
+**一句話**：情緒指標方向都對、統計上顯著，但市場比讀者快，看到再進場扣掉成本就沒有了；扣成本後還有用的是散戶實際的交易行為加技術面、持有一個月。情緒的價值在**描述與提醒**，這決定了平台的設計。
 
----
-
-## 起點：選讀論文與概念驗證
-
-**選讀論文**：Jing, N., Wu, Z., & Wang, H. (2021). *A hybrid model integrating deep learning with investor sentiment analysis for stock price prediction.* Expert Systems with Applications, 178, 115019.
-
-- 用 CNN 判斷東方財富股吧 88 萬則貼文的情緒，加上 16 項技術指標，以 LSTM 預測隔天收盤價。
-- 加入情緒後，預測誤差（MAPE）由 0.0675 降到 0.0449（約三成）。
-- 是本專題「技術面＋情緒雙軌整合」平台的依據。
-
-**7 月概念驗證**：台積電 2330、PTT 133 篇文章／1.8 萬則留言、35 個交易日。流程（爬蟲 → 情緒詞典 → 技術指標）跑通，動能指標與情緒同向（相關約 0.2）；樣本太少不能談預測，後續工作為「資料拉長、驗證情緒的預測力」。
-
----
-
-## 研究問題
-
-1. 論文「加情緒讓預測更準」的結論，在台股、十年、全市場的資料下還成立嗎？
-2. 散戶「說」的（論壇留言、貼文）和散戶「做」的（融資融券等實際交易），哪一個對股價有預測力？
-3. 股價大漲大跌的日子，是什麼在影響？公司公告和媒體新聞能解釋多少？
-4. 扣掉交易成本、排除買不到的情況後，有沒有任何訊號還有用？
-5. 根據以上，平台上的情緒應該怎麼呈現？
-
----
+所有事先登記的假說、門檻與結果（含未通過）：[docs/prereg/PREREGISTRATION.md](docs/prereg/PREREGISTRATION.md)
+依時間倒序的完整研究紀錄：[docs/PROJECT_STATUS.md](docs/PROJECT_STATUS.md)
 
 ## 資料
 
-原始資料**不包含在本專案內**（見[專案結構](#專案結構與重現方式)）。
+原始資料**不放在 GitHub**（TEJ 為學校授權、爬來的原文有版權、檔案數 GB）。取得方式與踩過的坑見 [docs/08_data_collection.md](docs/08_data_collection.md)。
 
 | 資料 | 規模 | 期間 | 來源 |
 |---|---|---|---|
-| PTT 股板留言 | 2,021 萬則（對到個股 231 萬則） | 2015–2025 | PTT Stock 板（含 pttweb 鏡像站補舊文） |
-| PTT 閒聊串 | 583 萬則，抽樣 72 萬則做大盤情緒 | 2015–2025 | PTT Stock 板 |
-| CMoney 股市同學會 | 122 萬篇貼文（清理後 107 萬） | 2020–2024 | CMoney（使用者自行登入取得 token） |
-| 鉅亨網台股新聞 | 18.8 萬則（清理後對到個股 9.4 萬則） | 2015–2025 | 鉅亨網公開介面 |
-| 公司重大訊息 | 40.9 萬則，1,154 家，每則有時分秒 | 2015–2025 | 公開資訊觀測站 |
-| 股價（還原）、籌碼、融資融券、法人與散戶成交比重 | 全市場四碼普通股 1,154 檔（含下市），270 萬股票日 | 2014–2025 | TEJ Pro（學校授權） |
-| 舊年份股價（含注意股、處置股旗標） | 1,055 檔，257 萬股票日 | 2001–2013 | TEJ Pro |
-| 特殊事件（庫藏股、減資、股利、現增等 9 類） | 4.6 萬筆 | 1971–2026 | TEJ Pro |
-| 股權分散（散戶持股比例） | 年資料 | 2013–2026 | TEJ Pro |
-| 美股、台指夜盤、每分鐘加權指數、當沖統計 | — | 2015–2024 | 證交所、期交所、公開資料 |
+| PTT 股板留言 | 2,021 萬則（對到個股 231 萬則） | 2015–2025 | PTT Stock 板、pttweb 鏡像站 |
+| CMoney 股市同學會 | 122 萬篇貼文 | 2020–2024 | CMoney（需本人登入） |
+| 鉅亨網台股新聞 | 18.8 萬則（對到個股 9.4 萬則） | 2015–2025 | 鉅亨網 |
+| 公司重大訊息 | 40.9 萬則、1,154 家 | 2015–2025 | 公開資訊觀測站 |
+| 股價、籌碼、融資融券、成交比重 | 全市場 1,154 檔（含下市）、270 萬股票日 | 2014–2025 | TEJ Pro |
+| 舊年份股價（含注意股、處置股） | 1,055 檔 | 2001–2013 | TEJ Pro |
+| 特殊事件 | 4.6 萬筆、9 類 | 1971–2026 | TEJ Pro |
+| 三大法人、融資融券、當沖、每分鐘指數、台指夜盤、美股 | — | 2015–2024 | 證交所、期交所 |
 
-**情緒分類**：PTT 留言用大型語言模型 Breeze 分三類（正／負／中立）；另以人工＋Claude 重標 5,194 則留言當標準答案，微調中文 BERT 重標全部 231 萬則做比較。CMoney 用其網站上的作者自標與重新訓練的模型。新聞用事先寫好的正負面詞表。
+## 共通設計
 
----
+- **不偷看未來**：逐年往前滾動（用過去訓練、預測下一年）；情緒只用隔天開盤前已發布的內容；籌碼只用當天盤後已公布的數字；特徵正規化只用訓練期。
+- **時間對齊**：開盤前與盤中發布的消息算當天，收盤後的算下一個交易日。
+- **超額報酬**：個股減當天全市場等權平均。
+- **開發與驗證分開**：規則在原 265 檔或 2015–2019 找，一字不改套到另外 889 檔、2020–2025、2001–2013 或 2025。
+- **多重檢定**：同批 k 個假設用 Bonferroni（p < 0.05/k）；t 值依交易日或事件月份群聚。
+- **可交易性**：扣來回成本 0.47%（另報 0.585%）；剔除當天收在漲停／跌停、實際買不到或賣不掉的情況；下市當期記 −50%。
+- **對照**：一律與「只有技術面」或「今天收盤當明天」比較。
 
-## 驗證原則
+## 執行
 
-- **不偷看未來**：逐年往前滾動（用過去訓練、預測下一年），情緒只用「隔天開盤前已發布」的內容，籌碼只用當天盤後已公布的數字。
-- **事先寫定假說**：後期每個檢驗都先把「要驗什麼、怎樣算通過」寫在程式開頭再跑；同時驗多個時用 Bonferroni 調嚴門檻。沒通過的照實記錄（見[第 7 節](#沒有通過的檢驗)）。
-- **樣本外驗證**：在原本 265 檔上歸納的規則，一字不改套到另外 889 檔沒看過的股票；或用 2001–2013、2025 這些沒用過的年份驗證。
-- **可交易性**：回測扣交易成本（來回約 0.47%，手續費六折含證交稅；另報無折扣 0.585%），並剔除當天收在漲停／跌停、實際買不到或賣不掉的情況。
-- **對照組**：每個檢驗都和「只有技術面」或「天真預測」比較，避免只看絕對數字。
+程式在 [`code/`](code/)，每支程式的用途與對應結果見 [`code/INDEX.md`](code/INDEX.md)（自動產生）。多數程式在資料夾根目錄執行、讀寫相對路徑；結果寫到同名的 `.log`／`_results.json`，已收在 [`results/`](results/)。
 
----
+```bash
+pip install -r requirements.txt
 
-## 結果
+# 1. 資料蒐集
+python code/batch_crawler_267.py          # PTT 267 檔文章與留言
+python code/crawl_pttweb_api.py           # PTT 舊文（鏡像站）
+python code/download_chip_data.py         # 證交所三大法人、融資融券（另有 _2015 補舊年）
+python code/crawl_cmoney_daily.py         # CMoney 同學會（需 cmoney_token.json）
+python code/crawl_cnyes_news.py           # 鉅亨網新聞（約 7 小時，務必單支慢速）
+python code/crawl_mops_material.py --all  # 公開資訊觀測站重大訊息（全市場約 5 小時）
+python code/tej_build_dataset.py          # TEJ 匯出檔 → 265 檔資料集（需授權資料）
+python code/tej_build_fullmarket.py       # TEJ → 全市場資料集
 
-### 第一步：照論文的作法重做
+# 2. 情緒分類
+python code/breeze_infer_267_fast.py      # Breeze 三分類（GPU）
+python code/finetune_gold_cv.py           # 微調 BERT 的交叉驗證；finetune_gold_infer.py 重標全部
+python code/cmoney_clean.py               # CMoney 清理
+python code/cnyes_build.py                # 新聞清理與配股票
 
-| | 論文 | 本專題（台股 265 檔、十年） |
-|---|---|---|
-| 只用技術面的 MAPE | 6.75% | 13.24% |
-| 加情緒 | 4.49%（降約三成） | 13.08%（差異不顯著，p=0.35） |
-| 「今天收盤當明天」的 MAPE | 未比較 | **1.22%**（模型 265 檔中 0 檔贏過） |
-| 測試期 | 約 2 個月 | 約 1.5 年 |
-| 情緒來源 | 股吧貼文 | PTT 留言 |
+# 3. 資料集
+python code/build_dataset_v3.py           # → final_dataset_v3/all_stocks_v3.csv
 
-→ 預測股價水準的誤差被價格慣性主導，看不出情緒效果，因此改測漲跌方向與報酬。
+# 4. 各研究（見 docs/ 與 code/INDEX.md）
+python code/lstm_price_v4.py --arm 技術面 --seed 0   # 研究一（批次：bash code/run_lstm_price_v4.sh）
+python code/retail_test_v4.py                         # 研究二、三：XGBoost 逐年滾動
+python code/tej_fullmarket_test.py                    # 研究三：全市場
+python code/mops_bigmove.py && python code/mops_bigmove.py out    # 研究四：公告（探索 → 驗證）
+python code/cnyes_bigmove.py && python code/cnyes_bigmove.py out  # 研究四：新聞
+python code/bigmove_decompose.py out                  # 研究四：歸因與之後走勢
+python code/tej_event_oos_pre2014.py                  # 研究五：庫藏股樣本外
+python code/monthly_fullmarket_strategy.py            # 研究六：月頻選股
+python code/weekly_fullmarket_strategy.py             # 研究六：週頻
+python code/sentiment_regime_test.py                  # 研究七：情緒當開關
 
-### A．散戶「說」的：預測不了
+# 5. 簡報
+cd slides && npm install && node build_deck_v19.js
+```
 
-| 檢驗 | 結果 |
-|---|---|
-| PTT 情緒預測隔天漲跌（6 種因子 × XGBoost／LSTM／邏輯迴歸） | 準確度增量約 0（7 個測試年 0~1 年顯著） |
-| 只用 PTT 情緒交易 | 猜對約 47%，扣成本十年虧光；只用 PTT 的模型 AUC 0.50 |
-| 為什麼 | 59.5% 留言在收盤後才發；被看好的股票留言前 20 天已漲 5.6%、之後 20 天 +0.1% |
-| 換更準的分類器（微調 BERT，重標 231 萬則） | 沒有變好（隔夜效果 +4.4 → +3.5 bp） |
-| 換平台（CMoney） | 隔天 +4 bp（顯著但只有成本的十分之一） |
-| 換股價來源（TEJ） | 數字只差小數點後一位 |
-| 換目標（隔天波動、成交量） | 增量 0.0000／+0.0003，不顯著 |
-| 2025 樣本外 | 原本殘留的隔夜小效果反轉 |
-
-### B．換個問法：大波動日是什麼在影響
-
-**大波動日的歸因**（全市場 5.2 萬個大波動日；大波動＝當天漲跌超過自己平常的 3 倍且大於 3%）：
-
-| 原因 | 大漲日 | 大跌日 |
-|---|---|---|
-| 公司公告 | 15.8% | 23.8% |
-| 媒體新聞 | 5.7% | 3.9% |
-| 收盤後才有消息 | 8.5% | 7.7% |
-| 同產業一起動 | 9.0% | 6.1% |
-| 延續前一天 | 7.3% | 3.7% |
-| **找不到** | **53.7%** | **54.8%** |
-
-**公司公告類別**（265 檔歸納 → 889 檔驗證，6 個事先寫定的假說全部通過）：
-
-| 類別 | 265 檔 | 889 檔（驗證） |
-|---|---|---|
-| 澄清媒體報導 | +0.52% | +0.56%（t=11.8） |
-| 庫藏股 | +0.43% | +0.44%（t=4.9） |
-| 法人說明會（之後 4 天） | +0.26% | +0.33%（t=6.4） |
-| 股利分派 | +0.22% | +0.16%（t=4.3） |
-| 訴訟、裁罰、檢調 | −0.46% | −0.44%（t=−4.5） |
-| 災害、停工、事故 | −0.51% | −0.67%（t=−3.9） |
-
-**媒體新聞語氣**（889 檔驗證，3 個假說全部通過）：開盤前發布的正面新聞當天 +0.57%、負面 −0.58%，但正面的 +0.57% 裡隔夜跳空就占 +0.60%，開盤後是 −0.03% → **開盤那一下就反應完**。
-
-### C．什麼是有用的
-
-**散戶交易行為**：
-
-| 檢驗 | 結果 |
-|---|---|
-| 融資融券加進模型（265 檔） | 準確度 +0.0022，7 年全為正 |
-| 散戶成交比重（＝100%−法人成交比重） | +0.0026；與融資融券合用 +0.0052（7 年全顯著） |
-| 擴到全市場 1,144 檔 | 融資融券 +0.0026、散戶成交比重 +0.0034（t=6~8） |
-| 只看沒被選進原樣本的 879 檔 | +0.0027 → 不是倖存者偏差 |
-| 散戶持股多的股票 | 融資融券訊號更強；PTT／CMoney 情緒沒有更強 |
-
-**交易頻率決定一切**（全市場、只做多、扣成本、剔除買不到的）：
-
-| 持有時間 | 扣成本後比一般股票多 | 結論 |
-|---|---|---|
-| 幾天 | 全部 ≤ 0 | 成本吃光 |
-| 一週 | +0.09%／週（t=1.8） | 剩一點、不夠穩 |
-| 一個月 | **+0.63%／月（t=2.9）** | 唯一站得住 |
-
-**月頻選股**（技術面＋散戶交易行為，每月買模型分數前 20%）：2018–2025 扣成本年化 **22.1%**（同批股票平均 12.9%、市值加權 16.8%），最大回落 −14.5%；沒看過的 889 檔一樣（+0.66%／月）。但**相對加權指數不顯著**，2024、2025 兩年輸；新聞、公告、隔夜情緒加進去都沒有增量。
-
-**提醒類發現**：
-
-- 大漲、沒鎖漲停、又找不到消息的股票，之後 5 天平均回吐 0.6%（2015–2025 兩組股票每年皆負；2001–2013 樣本外驗證 −0.48%，13 年中 12 年為負）。
-- 庫藏股公告後第 2~5 天續漲（2001–2013 驗證 +1.23%，t=5.9），但扣成本後贏不了大盤。
-- 市場恐慌時，技術面訊號準確度下降約三成（Rank IC 0.151 → 0.106）；控制大盤漲跌後只剩邊緣顯著。
-
-### D．情緒的描述力
-
-8 類細分情緒指數（恐慌、貪婪、FOMO 等）在 2020 年疫情崩盤（恐慌 +1.90σ）、2024-08-05 股災（+2.06σ）時準確升高；但 38 個預測檢定中顯著的數量與純巧合相當。
-
----
-
-## 沒有通過的檢驗
-
-照實記錄，避免只報好結果：
-
-- 照論文作法加情緒降低 MAPE（不顯著）。
-- PTT 情緒的 2025 樣本外（隔夜效果反轉）。
-- 全市場 2025 樣本外：融資融券＋散戶成交比重 +0.0028，但信賴區間含 0。
-- 「有消息的大漲之後續漲可以賺」：剔除漲停後為 0，扣成本為負。
-- 「散戶追得越兇，沒消息的大漲回吐越多」：方向相反（融資增加多的反而回吐少）。
-- 「負面新聞之後放空」：剔除跌停後扣成本為負。
-- 週頻選股扣成本後贏一般股票（t=1.8，未過門檻）；週頻加新聞與公告（無增量）。
-- 月頻加新聞＋公告、加隔夜情緒（無增量）。
-- 散戶成交比重的月頻預測力（IC ≈ 0）。
-
----
+環境：Python 3.10；部分模型用 NVIDIA GPU（XGBoost `device="cuda"`、BERT、Breeze）；簡報用 Node.js＋pptxgenjs。
+本專案沒有自動測試（程式未寫成套件）；正確性靠事先登記、樣本外驗證、與 TEJ 交叉核對資料。
 
 ## 平台設計
 
 | 模組 | 內容 | 依據 |
 |---|---|---|
-| 情緒指數模組 | 散戶溫度計、恐慌／貪婪等 8 類情緒、個股討論熱度與淨情緒、隔夜情緒 | 描述力強（股災時準確升高） |
-| 技術面＋籌碼看板 | 技術指標、融資融券、散戶成交比重、月頻選股分數 | 唯一扣成本後還有用的；標示不保證贏大盤 |
-| 事件提示 | 公告類別的歷史方向、「沒消息的大漲之後通常回吐」、恐慌時訊號可靠度下降 | 樣本外驗證過的結果 |
+| 情緒指數模組 | 散戶溫度計、恐慌／貪婪等 8 類情緒、個股討論熱度與淨情緒、隔夜情緒 | 研究二、七：描述力強 |
+| 技術面＋籌碼看板 | 技術指標、融資融券、散戶成交比重、月頻選股分數 | 研究三、六：唯一扣成本後還有用的；標示不保證贏大盤 |
+| 事件提示 | 公告類別的歷史方向、「沒消息的大漲之後通常回吐」、恐慌時訊號可靠度下降 | 研究四、五、七：樣本外驗證過 |
 
-所有功能一律標示「這是描述與提醒，不是漲跌預測」。
-
----
+所有功能標示「這是描述與提醒，不是漲跌預測」。
 
 ## 限制
 
-- PTT 個股留言集中在少數熱門股（台積電一檔占三成），PTT 的結論主要適用於熱門股；全市場沒有 PTT 配對。
-- 新聞只有鉅亨網一家、只看標題；「找不到消息」可能只是沒抓到。
-- 情緒分類器準確率約六成（重標實驗顯示對結論影響小）。
-- 「沒消息的大漲會回吐」在 2015 年以後的切法不是事先寫定的（回測時才發現要剔除漲停）。
-- 月頻選股要靠模型組合十幾個特徵；只用三個好懂的訊號不行。
-- 未處理下市當下的報酬細節（月頻以 −50% 保守處理）。
+- PTT 個股留言集中在少數熱門股（台積電占三成）；全市場沒有 PTT 配對。
+- 新聞只有鉅亨網、只看標題；「找不到消息」可能只是沒抓到。
+- 情緒分類器準確率約六成（重標與微調實驗顯示對結論影響小）。
+- 研究一用 PTT 留言，論文用股吧貼文；最接近的 CMoney 貼文尚未用 LSTM-MAPE 作法重跑。
+- 「沒消息的大漲會回吐」在 2015 年以後的切法不是事先寫定的；舊年份上的版本才是。
+- 月頻選股靠模型組合多個特徵，可解釋性較差；最近兩年輸加權指數。
 
----
-
-## 專案結構與重現方式
+## 資料夾
 
 | 路徑 | 內容 |
 |---|---|
-| [`code/`](code/) | 全部程式；[`code/INDEX.md`](code/INDEX.md) 依主題列出每支程式的用途與對應結果 |
-| [`results/`](results/) | 各檢驗的輸出（`.log`、`.out`、`*_results.json`），檔名與程式對應 |
-| [`slides/`](slides/) | 報告簡報（pptx）、講稿、產生簡報的程式（pptxgenjs） |
-| [`docs/PROJECT_STATUS.md`](docs/PROJECT_STATUS.md) | 依時間倒序的完整研究紀錄 |
+| `code/` | 全部程式（213 支）與自動產生的 `INDEX.md` |
+| `results/` | 各檢驗的輸出紀錄 |
+| `docs/` | 各研究說明（01–08）、事先登記假說總表、完整研究紀錄 |
+| `slides/` | 報告簡報、白話講稿、產生簡報的程式 |
 
-**不包含的東西**：原始資料（授權、版權、檔案大小）與 CMoney 登入 token。TEJ 資料需有授權者自行匯出，不可公開散布。
-
-**重現順序**（細節見 `code/INDEX.md` 與各程式開頭說明）：
-
-1. 資料蒐集：PTT 爬蟲（`batch_crawler_267.py`、`crawl_pttweb_api.py`）、籌碼下載（`download_chip_data*.py`）、CMoney（`crawl_cmoney_daily.py`）、鉅亨網（`crawl_cnyes_news.py`）、公開資訊觀測站（`crawl_mops_material.py`）；TEJ 自行匯出後用 `tej_build_*.py` 轉檔。
-2. 情緒分類：`breeze_infer_267_fast.py`（Breeze）、`finetune_gold_*.py`（微調 BERT）、`cmoney_clean.py`、`cnyes_build.py`。
-3. 資料集：`build_dataset_v3.py` → `final_dataset_v3*/all_stocks_v3.csv`；全市場 `tej_build_fullmarket.py`。
-4. 檢驗：依 `code/INDEX.md` 的主題分組執行；多數程式在資料夾根目錄執行（讀寫相對路徑）。
-5. 簡報：`slides/` 內 `npm install` 後 `node build_deck_v*.js`。
-
-**環境**：Python 3.10（套件見 `requirements.txt`）；部分模型使用 NVIDIA GPU（XGBoost `device="cuda"`、BERT 微調、Breeze 推論）；簡報需 Node.js 與 pptxgenjs。
+本專案由作者電腦上的 `code/sync_github.sh` 每小時自動同步（程式、結果、文件、最新版簡報；上傳前檢查不含資料檔與金鑰）。
 
 ---
 
-## 自動同步
+# Technical Analysis and Market Sentiment for a Taiwan Stock Information Platform
 
-本專案由作者電腦上的 `code/sync_github.sh` 每小時自動同步一次（Windows 工作排程器）：只同步程式、結果紀錄、研究紀錄與最新版簡報，並自動更新 `code/INDEX.md`；上傳前會檢查，出現資料檔、token、疑似金鑰或超過 50 MB 的檔案就中止。
+Undergraduate capstone project. Using ten years of Taiwan stock data across the whole market, we test whether retail investor sentiment predicts stock prices, and how sentiment should be presented in a "technical + sentiment" trading information platform. In the later stages every test had its hypotheses and thresholds written down before running, and was validated on unseen stocks or years; passes and failures are both reported.
+
+**Starting point.** Jing, Wu & Wang (2021, *Expert Systems with Applications* 178, 115019) report that adding forum sentiment to 16 technical indicators in an LSTM lowers next-day closing-price MAPE from 0.0675 to 0.0449.
+
+**Findings.**
+
+| Study | Question | Finding |
+|---|---|---|
+| 1. Replication | Does sentiment improve LSTM price prediction? | No. 265 Taiwan stocks, 10 years: MAPE 13.24% → 13.08% (n.s.); the naive "today's close = tomorrow's" forecast has 1.22% and the LSTM never beats it. |
+| 2. What retail investors say | Does PTT / CMoney sentiment predict next-day direction, returns, volatility or volume? | No. 59.5% of comments are posted after the close; results hold after changing the classifier, platform, price source and target; the small residual effect reverses in 2025. |
+| 3. What retail investors do | Do margin trading and the retail share of volume predict returns? | Yes, but small: ΔAUC ≈ +0.003 every year across 1,144 stocks, including 879 stocks never used in development; stronger where retail ownership is high. |
+| 4. Large moves | What drives large price moves, and what happens next? | Announcement and news categories have predictable signs (developed on 265 stocks, all six pre-registered tests pass on 889 unseen stocks) but are priced at the next open; over half of large moves have no identifiable news; large up-moves with no news and no limit-up close partially reverse over the next five days (almost every year over 24 years). |
+| 5. Corporate events | What happens after buyback announcements etc.? | Buyback announcements are followed by further gains (+1.23% on days 2–5, 2001–2013 out of sample) that do not beat the market after costs. |
+| 6. Holding period | How much survives costs at longer horizons? | Daily: nothing. Weekly: a little (n.s.). Monthly technical + retail-trading stock selection beats the average stock by 0.63% per month after costs (t = 2.9; 22% annualised) but not the cap-weighted index; text-based information adds nothing at any horizon. |
+| 7. Market level | Intraday / after-hours sentiment and emotion indices | Fear index spikes accurately in crashes (good description); an intraday contrarian signal is significant but ~1 bp; a 2025 paper's after-hours result largely disappears after controlling for US markets; sentiment as a "regime switch" is mostly a proxy for recent market moves. |
+
+**Bottom line.** Sentiment indicators point the right way and are statistically significant, but the market moves faster than readers; after costs, only retail trading behaviour plus technical indicators at a monthly horizon remains useful. Sentiment is best used to describe and alert, which shapes the platform design.
+
+Raw data (PTT, CMoney, cnyes, MOPS, TEJ) are not included for licensing and copyright reasons; see `docs/08_data_collection.md` for how to rebuild them.
