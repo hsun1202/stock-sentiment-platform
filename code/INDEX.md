@@ -265,3 +265,8 @@
 | `make_code_index.py` | 產生 GitHub 專案用的程式索引 code/INDEX.md：每支程式的用途（取程式開頭說明的第一段）、對應的結果檔，依主題分組。 由 sync_github.sh 在每次同步前自動執行，所以新程式會自動出現在索引裡。 | — |
 | `sync_github.sh` | 把專題資料夾的最新程式、結果紀錄、文件、最新版簡報同步到 GitHub 私人專案（只同步白名單，不含原始資料與 token） 來源：D:\專題claude    匯出：D:\專題claude_github（git 專案，remote＝GitHub 私人 repo） 由工作排程器定時執行（見 PROJECT_STATUS.md），也可以手動跑。 | — |
 
+## 其他
+
+| 程式 | 用途 |
+|---|---|
+| `quarterly_vol.py` | 季頻高低波動選股 vs 大盤（不扣手續費）。事先寫定的假說見 PREREG_quarterly_vol.md。 每季底依過去 3 個月日報酬標準差分 5 組、等權、持有一季；和 0050 含息、^TWII、市值加權比。 cd D:/專題claude && python quarterly_vol/quarterly_vol.py |

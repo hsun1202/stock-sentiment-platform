@@ -21,6 +21,10 @@ for f in "$SRC"/*.json; do
   case "$b" in *token*) continue ;; esac
   cp -u "$f" "$DST/results/"
 done
+# 季頻高低波動（子資料夾；不傳抓下來的價格 csv）
+mkdir -p "$DST/results/quarterly_vol"
+cp -u "$SRC"/quarterly_vol/*.py "$DST/code/" 2>/dev/null || true
+cp -u "$SRC"/quarterly_vol/*.log "$SRC"/quarterly_vol/*.png "$SRC"/quarterly_vol/*.md "$SRC"/quarterly_vol/quarterly_vol_returns.csv "$DST/results/quarterly_vol/" 2>/dev/null || true
 # 3) 文件
 cp -u "$SRC/PROJECT_STATUS.md" "$DST/docs/"
 # 4) 最新版簡報（版本號最大的 build_deck_vN.js 及對應 pptx、講稿）
