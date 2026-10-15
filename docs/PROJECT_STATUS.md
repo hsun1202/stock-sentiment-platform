@@ -1,3 +1,28 @@
+# ▶▶ 新對話先看這段（2026-10-15 深夜交接；context 快滿，使用者要求先整理）
+
+**現況**
+- 沒有分析在跑。唯一的排程＝`PTT_github_sync`（每小時自動同步到 GitHub，正常）。
+- 分析已收斂（使用者同意不再找新檢驗）。最後一輪做完：週頻選股（W1 t=1.77 未過、W2 未過）。
+- **報告用：簡報 `ppt_build/final_report_v19.pptx`（28 頁）＋講稿 `ppt_build/講稿_v19.md`**。使用者還要過精簡講稿（只講有結果的部分，在聊天中給過，未存檔）。
+- 使用者選讀論文＝Jing, Wu & Wang 2021（`C:\Users\terry\Downloads\jing2021.pdf`）；專題**沒有「原型論文」**，不要再寫「原論文／原型」。7 月概念驗證簡報＝`Downloads\2330_技術面情緒面整合分析_簡報_v2 (1).pptx`。
+
+**GitHub（使用者要求做成跟組員一樣詳細的專案包並即時同步）**
+- 私人 repo：https://github.com/hsun1202/stock-sentiment-platform ；本地 `D:\專題claude_github`。
+- 手寫文件（**不會自動更新，有新結果要手動補**）：`README.md`（中英、結論總表、執行、平台、限制）、`docs/01_replication.md`～`07_market_level.md`（各研究）、`docs/08_data_collection.md`（資料取得與坑）、`docs/prereg/PREREGISTRATION.md`（19 組約 50 個事先登記假說與結果）。
+- 自動更新：`code/`（全部程式＋`make_code_index.py` 產生的 `code/INDEX.md`）、`results/`、`docs/PROJECT_STATUS.md`、`slides/`（版本號最大的簡報與講稿）。
+- 組員 repo（公開）：https://github.com/jameschen108/tw-stock-sentiment —— 四個研究：情緒不能預測報酬、[標的] 文作者追漲、**開盤前討論量能預測當天成交量（兩次樣本外通過）**、**開盤前討論量能預告大漲跌（t=4.61）**、LLM 歸因過半大漲跌找不到原因、沒新聞大漲跌之後沒有明顯反轉（與我們含漲停時一致；我們剔除收漲停後才看到回吐）、開盤前情緒稍微預告盤中方向（t=2.08）。他的程式是套件＋測試＋每研究一份登記文件。
+
+**待使用者決定／可做的事**
+1. CMoney 用完整資料跑 LSTM-MAPE（照論文）與 XGBoost 方向檢驗——**從未做過**（只有舊版 58 檔的 XGBoost 與新版迴歸），估約 40–60 分鐘；使用者問過時間，尚未說要跑。
+2. 平台網頁（三模組：情緒指數、技術面＋籌碼看板、事件提示）——建議下一步，使用者尚未點頭。
+3. 重匯 2014–2025 含注意／處置旗標的 TEJ 股價 → 驗 V-A、V-D。
+4. 與組員對齊：沒消息大漲是否剔除漲停；兩邊結果合併成一份報告。
+5. 簡報封面仍寫「期中進度報告」，需確認是否要改。
+
+**時間尺度總結（報告核心）**：日頻扣成本全 ≤0；週頻 +0.09%/週（t=1.8）；月頻 +0.63%/月（t=2.9，年化 22%，相對加權指數不顯著、2024–25 輸）；文字類資訊在任何尺度都加不上去。
+
+---
+
 # 專題進度總覽（更新：2026-10-05）
 
 **★ GitHub 私人專案（2026-10-15 建立）**：https://github.com/hsun1202/stock-sentiment-platform （PRIVATE；帳號 hsun1202，gh CLI 已登入，`C:\Program Files\GitHub CLI\gh.exe`）。本地 git 專案在 `D:\專題claude_github`（code/、results/、slides/、docs/、README.md、.gitignore、requirements.txt），**只放程式、結果紀錄、文件、最新版簡報與講稿；不放原始資料（PTT/CMoney/鉅亨/MOPS/TEJ，授權與版權）與 `cmoney_token.json`**。同步程式 `sync_github.sh`（白名單複製 → 有變動才 commit＋push；暫存區有資料檔/token/疑似金鑰/>50MB 檔就中止；紀錄 `sync_github.log`），**工作排程器 `PTT_github_sync` 每小時跑一次**（`wscript sync_github_hidden.vbs` 隱藏視窗執行 `D:\Program Files\Gitinash.exe`）。做完分析或改完簡報可手動 `bash sync_github.sh`。不要時：`Unregister-ScheduledTask PTT_github_sync -Confirm:$false`。
