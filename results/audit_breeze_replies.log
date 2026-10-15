@@ -1,0 +1,35 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+W0919 11:29:07.196000 2952 site-packages\torch\utils\flop_counter.py:29] triton not found; flop counting will not work for triton kernels
+Loading weights:   0%|          | 0/291 [00:00<?, ?it/s]Loading weights:   0%|          | 1/291 [00:00<00:34,  8.40it/s]Loading weights:   1%|          | 2/291 [00:00<00:33,  8.51it/s]Loading weights:   2%|▏         | 6/291 [00:00<00:13, 20.86it/s]Loading weights:   5%|▌         | 15/291 [00:00<00:06, 44.76it/s]Loading weights:   8%|▊         | 24/291 [00:00<00:04, 58.26it/s]Loading weights:  11%|█▏        | 33/291 [00:00<00:03, 65.39it/s]Loading weights:  14%|█▍        | 42/291 [00:00<00:03, 67.61it/s]Loading weights:  18%|█▊        | 51/291 [00:00<00:03, 71.15it/s]Loading weights:  21%|██        | 60/291 [00:01<00:03, 73.88it/s]Loading weights:  24%|██▎       | 69/291 [00:01<00:02, 75.44it/s]Loading weights:  27%|██▋       | 78/291 [00:01<00:02, 76.43it/s]Loading weights:  30%|██▉       | 87/291 [00:01<00:02, 77.60it/s]Loading weights:  33%|███▎      | 96/291 [00:01<00:02, 78.34it/s]Loading weights:  36%|███▌      | 105/291 [00:01<00:02, 78.71it/s]Loading weights:  39%|███▉      | 114/291 [00:01<00:02, 79.42it/s]Loading weights:  42%|████▏     | 123/291 [00:01<00:02, 79.40it/s]Loading weights:  45%|████▌     | 132/291 [00:01<00:01, 79.56it/s]Loading weights:  48%|████▊     | 141/291 [00:02<00:01, 79.04it/s]Loading weights:  52%|█████▏    | 150/291 [00:02<00:01, 78.68it/s]Loading weights:  55%|█████▍    | 159/291 [00:02<00:01, 78.67it/s]Loading weights:  58%|█████▊    | 168/291 [00:02<00:01, 79.15it/s]Loading weights:  61%|██████    | 177/291 [00:02<00:01, 79.02it/s]Loading weights:  64%|██████▍   | 186/291 [00:02<00:01, 79.00it/s]Loading weights:  67%|██████▋   | 195/291 [00:02<00:01, 78.60it/s]Loading weights:  70%|███████   | 204/291 [00:02<00:01, 79.37it/s]Loading weights:  73%|███████▎  | 213/291 [00:02<00:00, 79.85it/s]Loading weights:  76%|███████▋  | 222/291 [00:03<00:00, 79.74it/s]Loading weights:  79%|███████▉  | 231/291 [00:03<00:00, 79.32it/s]Loading weights:  82%|████████▏ | 240/291 [00:03<00:00, 78.96it/s]Loading weights:  86%|████████▌ | 249/291 [00:03<00:00, 78.94it/s]Loading weights:  89%|████████▊ | 258/291 [00:03<00:00, 78.24it/s]Loading weights:  92%|█████████▏| 267/291 [00:03<00:00, 77.50it/s]Loading weights:  95%|█████████▍| 276/291 [00:03<00:00, 78.09it/s]Loading weights:  98%|█████████▊| 285/291 [00:03<00:00, 77.70it/s]Loading weights: 100%|██████████| 291/291 [00:03<00:00, 74.58it/s]
+進度 16/1100
+進度 176/1100
+進度 336/1100
+進度 496/1100
+進度 656/1100
+進度 816/1100
+進度 976/1100
+
+=== 有回出標籤字的比例：36.3%  (沒回標籤而被預設neutral：701則) ===
+Breeze輸出分佈: {'neutral': 921, 'positive': 125, 'negative': 54}  Claude分佈: {'neutral': 556, 'negative': 317, 'positive': 227}
+整體 Accuracy 52.4%  Macro-F1 0.375
+只看有回標籤的 399則：Accuracy 61.4%  Macro-F1 0.529
+沒回標籤(被預設neutral) 701則 的 Claude標籤分佈: {'neutral': 329, 'negative': 229, 'positive': 143}
+混淆矩陣 (列=Claude, 欄=Breeze; 順序 pos,neg,neu):
+[[ 53   6 168]
+ [ 29  29 259]
+ [ 43  19 494]]
+
+沒回標籤的回覆範例:
+                           content       reply claude_label
+0               六大銀行去買，之後人行再把公債買過來         看不懂      neutral
+1                        每日任務99特斯拉         看不懂      neutral
+2                   愛亂猜指數方向的 就是被收割         看不懂      neutral
+3                            放假放太多         看不懂      neutral
+5                         主要因素就是央行         看不懂      neutral
+6                      ！凹單之術凹到贏！！！         看不懂     positive
+7                不支持自己觀點就說別人柵欄仔嘔嘔嘔         看不懂      neutral
+8                     罐頭塔買別家的就送慶記吧         看不懂      neutral
+9          BTC是難以黃金化的，因為遇到風險只會一鍵賣出         看不懂     negative
+10  http://i.imgur.com/uY3rAcN.jpg  無法回答，請提供文字      neutral
+11                    端午節變盤 一個都別想跑         看不懂     negative
+12                       明天2萬不要不信邪         看不懂     positive

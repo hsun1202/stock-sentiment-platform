@@ -1,0 +1,15 @@
+# 機密
+cmoney_token.json
+*token*.json
+.env
+# 原始與中間資料（授權／版權／大小，不上傳）
+*.csv
+*.pkl
+*.parquet
+*.jsonl
+*.zip
+*.pt
+*.bin
+tej_raw/
+node_modules/
+__pycache__/

@@ -1,0 +1,23 @@
+=== 讀取留言資料，依article_id分組（一次性讀取，避免每檔股票重複讀大檔） ===
+留言共 427424 則，涵蓋 56252 篇文章
+
+=== 載入 Breeze-7B（4-bit量化）===
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+W0915 12:00:58.384000 22884 site-packages\torch\utils\flop_counter.py:29] triton not found; flop counting will not work for triton kernels
+Loading weights:   0%|          | 0/291 [00:00<?, ?it/s]Loading weights:   0%|          | 1/291 [00:00<00:34,  8.51it/s]Loading weights:   1%|          | 2/291 [00:00<00:34,  8.28it/s]Loading weights:   2%|▏         | 6/291 [00:00<00:14, 20.18it/s]Loading weights:   5%|▌         | 15/291 [00:00<00:06, 41.64it/s]Loading weights:   8%|▊         | 24/291 [00:00<00:04, 54.31it/s]Loading weights:  11%|█▏        | 33/291 [00:00<00:04, 61.67it/s]Loading weights:  14%|█▍        | 42/291 [00:00<00:03, 66.15it/s]Loading weights:  18%|█▊        | 51/291 [00:00<00:03, 69.52it/s]Loading weights:  21%|██        | 60/291 [00:01<00:03, 71.72it/s]Loading weights:  24%|██▎       | 69/291 [00:01<00:03, 72.93it/s]Loading weights:  27%|██▋       | 78/291 [00:01<00:02, 74.04it/s]Loading weights:  30%|██▉       | 87/291 [00:01<00:02, 74.74it/s]Loading weights:  33%|███▎      | 96/291 [00:01<00:02, 75.63it/s]Loading weights:  36%|███▌      | 105/291 [00:01<00:02, 76.11it/s]Loading weights:  39%|███▉      | 114/291 [00:01<00:02, 75.48it/s]Loading weights:  42%|████▏     | 123/291 [00:01<00:02, 76.10it/s]Loading weights:  45%|████▌     | 132/291 [00:02<00:02, 76.08it/s]Loading weights:  48%|████▊     | 141/291 [00:02<00:01, 75.90it/s]Loading weights:  52%|█████▏    | 150/291 [00:02<00:01, 76.20it/s]Loading weights:  55%|█████▍    | 159/291 [00:02<00:01, 76.38it/s]Loading weights:  58%|█████▊    | 168/291 [00:02<00:01, 76.64it/s]Loading weights:  61%|██████    | 177/291 [00:02<00:01, 76.62it/s]Loading weights:  64%|██████▍   | 186/291 [00:02<00:01, 76.61it/s]Loading weights:  67%|██████▋   | 195/291 [00:02<00:01, 76.80it/s]Loading weights:  70%|███████   | 204/291 [00:02<00:01, 77.23it/s]Loading weights:  73%|███████▎  | 213/291 [00:03<00:01, 77.43it/s]Loading weights:  76%|███████▋  | 222/291 [00:03<00:00, 77.74it/s]Loading weights:  79%|███████▉  | 231/291 [00:03<00:00, 77.70it/s]Loading weights:  82%|████████▏ | 240/291 [00:03<00:00, 77.52it/s]Loading weights:  86%|████████▌ | 249/291 [00:03<00:00, 77.34it/s]Loading weights:  89%|████████▊ | 258/291 [00:03<00:00, 77.31it/s]Loading weights:  92%|█████████▏| 267/291 [00:03<00:00, 77.19it/s]Loading weights:  95%|█████████▍| 276/291 [00:03<00:00, 76.91it/s]Loading weights:  98%|█████████▊| 285/291 [00:03<00:00, 76.41it/s]Loading weights: 100%|██████████| 291/291 [00:04<00:00, 72.39it/s]
+=== 模型載入完成，開始批次處理 ===
+
+[1/267] 1101 台泥：沒有可分類的文字，跳過
+[2/267] 1102 亞泥：沒有可分類的文字，跳過
+[3/267] 1103 嘉泥：沒有可分類的文字，跳過
+[4/267] 1104 環泥：沒有可分類的文字，跳過
+[5/267] 1108 幸福（水泥）：99 則文字，開始分類...
+    進度 99/99
+    [完成] 34 篇文章的情緒因子 -> sentiment_output_cmoney\1108_幸福_sentiment.csv
+[6/267] 1109 信大：沒有可分類的文字，跳過
+Traceback (most recent call last):
+  File "D:\專題claude\breeze_infer_cmoney.py", line 221, in <module>
+    df = load_texts_for_stock(code, name, args.articles_dir, comments_df_by_article)
+  File "D:\專題claude\breeze_infer_cmoney.py", line 144, in load_texts_for_stock
+    if art_text.strip():
+AttributeError: 'float' object has no attribute 'strip'

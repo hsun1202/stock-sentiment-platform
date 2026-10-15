@@ -1,0 +1,217 @@
+W1003 01:54:37.446000 22684 site-packages\torch\utils\flop_counter.py:29] triton not found; flop counting will not work for triton kernels
+模型 ckiplab/bert-base-chinese｜epochs 4｜lr 3e-05｜seeds 1
+金標：重標樣本 5,194 則（400 個股票日）＋舊金標 1,100 則（只進訓練）
+金標分布（正/負/中）：[0.173, 0.229, 0.598]
+
+基準：
+  Breeze（現行）             一致率 62.3%｜Kappa 0.37｜Macro-F1 0.587｜方向相反 14.0%｜判正的真為正 47%｜判負的真為負 50%｜分布(正/負/中) [0.21, 0.28, 0.51]｜股票日 n=354 相關 0.65、b=0.76±0.05
+                         混淆矩陣（列＝金標、欄＝模型；正/負/中）：[[512, 109, 277], [94, 736, 359], [484, 633, 1990]]
+Loading weights:   0%|          | 0/197 [00:00<?, ?it/s]Loading weights: 100%|██████████| 197/197 [00:00<00:00, 32842.24it/s]
+[transformers] [1mBertForSequenceClassification LOAD REPORT[0m from: ckiplab/bert-base-chinese
+Key                                        | Status     | 
+-------------------------------------------+------------+-
+cls.predictions.bias                       | UNEXPECTED | 
+cls.predictions.decoder.bias               | UNEXPECTED | 
+cls.predictions.transform.LayerNorm.bias   | UNEXPECTED | 
+cls.predictions.transform.LayerNorm.weight | UNEXPECTED | 
+cls.predictions.decoder.weight             | UNEXPECTED | 
+cls.predictions.transform.dense.bias       | UNEXPECTED | 
+cls.predictions.transform.dense.weight     | UNEXPECTED | 
+bert.pooler.dense.weight                   | MISSING    | 
+classifier.weight                          | MISSING    | 
+classifier.bias                            | MISSING    | 
+bert.pooler.dense.bias                     | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+    content seed 0 fold 0 done
+Loading weights:   0%|          | 0/197 [00:00<?, ?it/s]Loading weights: 100%|██████████| 197/197 [00:00<00:00, 49200.78it/s]
+[transformers] [1mBertForSequenceClassification LOAD REPORT[0m from: ckiplab/bert-base-chinese
+Key                                        | Status     | 
+-------------------------------------------+------------+-
+cls.predictions.bias                       | UNEXPECTED | 
+cls.predictions.decoder.bias               | UNEXPECTED | 
+cls.predictions.transform.LayerNorm.bias   | UNEXPECTED | 
+cls.predictions.transform.LayerNorm.weight | UNEXPECTED | 
+cls.predictions.decoder.weight             | UNEXPECTED | 
+cls.predictions.transform.dense.bias       | UNEXPECTED | 
+cls.predictions.transform.dense.weight     | UNEXPECTED | 
+bert.pooler.dense.weight                   | MISSING    | 
+classifier.weight                          | MISSING    | 
+classifier.bias                            | MISSING    | 
+bert.pooler.dense.bias                     | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+    content seed 0 fold 1 done
+Loading weights:   0%|          | 0/197 [00:00<?, ?it/s]Loading weights: 100%|██████████| 197/197 [00:00<00:00, 35920.44it/s]
+[transformers] [1mBertForSequenceClassification LOAD REPORT[0m from: ckiplab/bert-base-chinese
+Key                                        | Status     | 
+-------------------------------------------+------------+-
+cls.predictions.bias                       | UNEXPECTED | 
+cls.predictions.decoder.bias               | UNEXPECTED | 
+cls.predictions.transform.LayerNorm.bias   | UNEXPECTED | 
+cls.predictions.transform.LayerNorm.weight | UNEXPECTED | 
+cls.predictions.decoder.weight             | UNEXPECTED | 
+cls.predictions.transform.dense.bias       | UNEXPECTED | 
+cls.predictions.transform.dense.weight     | UNEXPECTED | 
+bert.pooler.dense.weight                   | MISSING    | 
+classifier.weight                          | MISSING    | 
+classifier.bias                            | MISSING    | 
+bert.pooler.dense.bias                     | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+    content seed 0 fold 2 done
+Loading weights:   0%|          | 0/197 [00:00<?, ?it/s]Loading weights: 100%|██████████| 197/197 [00:00<00:00, 34279.70it/s]
+[transformers] [1mBertForSequenceClassification LOAD REPORT[0m from: ckiplab/bert-base-chinese
+Key                                        | Status     | 
+-------------------------------------------+------------+-
+cls.predictions.bias                       | UNEXPECTED | 
+cls.predictions.decoder.bias               | UNEXPECTED | 
+cls.predictions.transform.LayerNorm.bias   | UNEXPECTED | 
+cls.predictions.transform.LayerNorm.weight | UNEXPECTED | 
+cls.predictions.decoder.weight             | UNEXPECTED | 
+cls.predictions.transform.dense.bias       | UNEXPECTED | 
+cls.predictions.transform.dense.weight     | UNEXPECTED | 
+bert.pooler.dense.weight                   | MISSING    | 
+classifier.weight                          | MISSING    | 
+classifier.bias                            | MISSING    | 
+bert.pooler.dense.bias                     | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+    content seed 0 fold 3 done
+Loading weights:   0%|          | 0/197 [00:00<?, ?it/s]Loading weights: 100%|██████████| 197/197 [00:00<00:00, 32801.82it/s]
+[transformers] [1mBertForSequenceClassification LOAD REPORT[0m from: ckiplab/bert-base-chinese
+Key                                        | Status     | 
+-------------------------------------------+------------+-
+cls.predictions.bias                       | UNEXPECTED | 
+cls.predictions.decoder.bias               | UNEXPECTED | 
+cls.predictions.transform.LayerNorm.bias   | UNEXPECTED | 
+cls.predictions.transform.LayerNorm.weight | UNEXPECTED | 
+cls.predictions.decoder.weight             | UNEXPECTED | 
+cls.predictions.transform.dense.bias       | UNEXPECTED | 
+cls.predictions.transform.dense.weight     | UNEXPECTED | 
+bert.pooler.dense.weight                   | MISSING    | 
+classifier.weight                          | MISSING    | 
+classifier.bias                            | MISSING    | 
+bert.pooler.dense.bias                     | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+    content seed 0 fold 4 done
+
+微調 BERT（content，折外預測）：
+  BERT-content           一致率 67.3%｜Kappa 0.41｜Macro-F1 0.616｜方向相反 15.1%｜判正的真為正 56%｜判負的真為負 54%｜分布(正/負/中) [0.17, 0.22, 0.6]｜股票日 n=336 相關 0.61、b=0.72±0.05
+                         混淆矩陣（列＝金標、欄＝模型；正/負/中）：[[500, 102, 296], [98, 623, 468], [294, 439, 2374]]
+Loading weights:   0%|          | 0/197 [00:00<?, ?it/s]Loading weights: 100%|██████████| 197/197 [00:00<00:00, 34299.62it/s]
+[transformers] [1mBertForSequenceClassification LOAD REPORT[0m from: ckiplab/bert-base-chinese
+Key                                        | Status     | 
+-------------------------------------------+------------+-
+cls.predictions.bias                       | UNEXPECTED | 
+cls.predictions.decoder.bias               | UNEXPECTED | 
+cls.predictions.transform.LayerNorm.bias   | UNEXPECTED | 
+cls.predictions.transform.LayerNorm.weight | UNEXPECTED | 
+cls.predictions.decoder.weight             | UNEXPECTED | 
+cls.predictions.transform.dense.bias       | UNEXPECTED | 
+cls.predictions.transform.dense.weight     | UNEXPECTED | 
+bert.pooler.dense.weight                   | MISSING    | 
+classifier.weight                          | MISSING    | 
+classifier.bias                            | MISSING    | 
+bert.pooler.dense.bias                     | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+    context seed 0 fold 0 done
+Loading weights:   0%|          | 0/197 [00:00<?, ?it/s]Loading weights: 100%|██████████| 197/197 [00:00<00:00, 25422.37it/s]
+[transformers] [1mBertForSequenceClassification LOAD REPORT[0m from: ckiplab/bert-base-chinese
+Key                                        | Status     | 
+-------------------------------------------+------------+-
+cls.predictions.bias                       | UNEXPECTED | 
+cls.predictions.decoder.bias               | UNEXPECTED | 
+cls.predictions.transform.LayerNorm.bias   | UNEXPECTED | 
+cls.predictions.transform.LayerNorm.weight | UNEXPECTED | 
+cls.predictions.decoder.weight             | UNEXPECTED | 
+cls.predictions.transform.dense.bias       | UNEXPECTED | 
+cls.predictions.transform.dense.weight     | UNEXPECTED | 
+bert.pooler.dense.weight                   | MISSING    | 
+classifier.weight                          | MISSING    | 
+classifier.bias                            | MISSING    | 
+bert.pooler.dense.bias                     | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+    context seed 0 fold 1 done
+Loading weights:   0%|          | 0/197 [00:00<?, ?it/s]Loading weights: 100%|██████████| 197/197 [00:00<00:00, 49189.06it/s]
+[transformers] [1mBertForSequenceClassification LOAD REPORT[0m from: ckiplab/bert-base-chinese
+Key                                        | Status     | 
+-------------------------------------------+------------+-
+cls.predictions.bias                       | UNEXPECTED | 
+cls.predictions.decoder.bias               | UNEXPECTED | 
+cls.predictions.transform.LayerNorm.bias   | UNEXPECTED | 
+cls.predictions.transform.LayerNorm.weight | UNEXPECTED | 
+cls.predictions.decoder.weight             | UNEXPECTED | 
+cls.predictions.transform.dense.bias       | UNEXPECTED | 
+cls.predictions.transform.dense.weight     | UNEXPECTED | 
+bert.pooler.dense.weight                   | MISSING    | 
+classifier.weight                          | MISSING    | 
+classifier.bias                            | MISSING    | 
+bert.pooler.dense.bias                     | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+    context seed 0 fold 2 done
+Loading weights:   0%|          | 0/197 [00:00<?, ?it/s]Loading weights: 100%|██████████| 197/197 [00:00<00:00, 34298.20it/s]
+[transformers] [1mBertForSequenceClassification LOAD REPORT[0m from: ckiplab/bert-base-chinese
+Key                                        | Status     | 
+-------------------------------------------+------------+-
+cls.predictions.bias                       | UNEXPECTED | 
+cls.predictions.decoder.bias               | UNEXPECTED | 
+cls.predictions.transform.LayerNorm.bias   | UNEXPECTED | 
+cls.predictions.transform.LayerNorm.weight | UNEXPECTED | 
+cls.predictions.decoder.weight             | UNEXPECTED | 
+cls.predictions.transform.dense.bias       | UNEXPECTED | 
+cls.predictions.transform.dense.weight     | UNEXPECTED | 
+bert.pooler.dense.weight                   | MISSING    | 
+classifier.weight                          | MISSING    | 
+classifier.bias                            | MISSING    | 
+bert.pooler.dense.bias                     | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+    context seed 0 fold 3 done
+Loading weights:   0%|          | 0/197 [00:00<?, ?it/s]Loading weights: 100%|██████████| 197/197 [00:00<00:00, 49203.71it/s]
+[transformers] [1mBertForSequenceClassification LOAD REPORT[0m from: ckiplab/bert-base-chinese
+Key                                        | Status     | 
+-------------------------------------------+------------+-
+cls.predictions.bias                       | UNEXPECTED | 
+cls.predictions.decoder.bias               | UNEXPECTED | 
+cls.predictions.transform.LayerNorm.bias   | UNEXPECTED | 
+cls.predictions.transform.LayerNorm.weight | UNEXPECTED | 
+cls.predictions.decoder.weight             | UNEXPECTED | 
+cls.predictions.transform.dense.bias       | UNEXPECTED | 
+cls.predictions.transform.dense.weight     | UNEXPECTED | 
+bert.pooler.dense.weight                   | MISSING    | 
+classifier.weight                          | MISSING    | 
+classifier.bias                            | MISSING    | 
+bert.pooler.dense.bias                     | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+    context seed 0 fold 4 done
+
+微調 BERT（context，折外預測）：
+  BERT-context           一致率 69.2%｜Kappa 0.44｜Macro-F1 0.633｜方向相反 14.9%｜判正的真為正 59%｜判負的真為負 56%｜分布(正/負/中) [0.16, 0.22, 0.61]｜股票日 n=332 相關 0.60、b=0.66±0.05
+                         混淆矩陣（列＝金標、欄＝模型；正/負/中）：[[505, 110, 283], [90, 638, 461], [262, 396, 2449]]
+DONE

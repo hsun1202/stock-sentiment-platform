@@ -1,0 +1,179 @@
+W1004 06:13:15.976000 29372 site-packages\torch\utils\flop_counter.py:29] triton not found; flop counting will not work for triton kernels
+留言 2,313,528 則（260 檔股票）；找不到標題 0.00%
+不重複的（上下文, 留言）2,284,134 組
+Loading weights:   0%|          | 0/197 [00:00<?, ?it/s]Loading weights: 100%|██████████| 197/197 [00:00<00:00, 49253.57it/s]
+[transformers] [1mBertForSequenceClassification LOAD REPORT[0m from: ckiplab/bert-base-chinese
+Key                                        | Status     | 
+-------------------------------------------+------------+-
+cls.predictions.decoder.weight             | UNEXPECTED | 
+cls.predictions.decoder.bias               | UNEXPECTED | 
+cls.predictions.transform.dense.bias       | UNEXPECTED | 
+cls.predictions.transform.LayerNorm.bias   | UNEXPECTED | 
+cls.predictions.bias                       | UNEXPECTED | 
+cls.predictions.transform.dense.weight     | UNEXPECTED | 
+cls.predictions.transform.LayerNorm.weight | UNEXPECTED | 
+classifier.weight                          | MISSING    | 
+bert.pooler.dense.bias                     | MISSING    | 
+classifier.bias                            | MISSING    | 
+bert.pooler.dense.weight                   | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+      推論 0/2,284,134
+      推論 64,000/2,284,134
+      推論 128,000/2,284,134
+      推論 192,000/2,284,134
+      推論 256,000/2,284,134
+      推論 320,000/2,284,134
+      推論 384,000/2,284,134
+      推論 448,000/2,284,134
+      推論 512,000/2,284,134
+      推論 576,000/2,284,134
+      推論 640,000/2,284,134
+      推論 704,000/2,284,134
+      推論 768,000/2,284,134
+      推論 832,000/2,284,134
+      推論 896,000/2,284,134
+      推論 960,000/2,284,134
+      推論 1,024,000/2,284,134
+      推論 1,088,000/2,284,134
+      推論 1,152,000/2,284,134
+      推論 1,216,000/2,284,134
+      推論 1,280,000/2,284,134
+      推論 1,344,000/2,284,134
+      推論 1,408,000/2,284,134
+      推論 1,472,000/2,284,134
+      推論 1,536,000/2,284,134
+      推論 1,600,000/2,284,134
+      推論 1,664,000/2,284,134
+      推論 1,728,000/2,284,134
+      推論 1,792,000/2,284,134
+      推論 1,856,000/2,284,134
+      推論 1,920,000/2,284,134
+      推論 1,984,000/2,284,134
+      推論 2,048,000/2,284,134
+      推論 2,112,000/2,284,134
+      推論 2,176,000/2,284,134
+      推論 2,240,000/2,284,134
+seed 0 完成（累計 846 秒）
+Loading weights:   0%|          | 0/197 [00:00<?, ?it/s]Loading weights: 100%|██████████| 197/197 [00:00<00:00, 49200.78it/s]
+[transformers] [1mBertForSequenceClassification LOAD REPORT[0m from: ckiplab/bert-base-chinese
+Key                                        | Status     | 
+-------------------------------------------+------------+-
+cls.predictions.decoder.weight             | UNEXPECTED | 
+cls.predictions.decoder.bias               | UNEXPECTED | 
+cls.predictions.transform.dense.bias       | UNEXPECTED | 
+cls.predictions.transform.LayerNorm.bias   | UNEXPECTED | 
+cls.predictions.bias                       | UNEXPECTED | 
+cls.predictions.transform.dense.weight     | UNEXPECTED | 
+cls.predictions.transform.LayerNorm.weight | UNEXPECTED | 
+classifier.weight                          | MISSING    | 
+bert.pooler.dense.bias                     | MISSING    | 
+classifier.bias                            | MISSING    | 
+bert.pooler.dense.weight                   | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+      推論 0/2,284,134
+      推論 64,000/2,284,134
+      推論 128,000/2,284,134
+      推論 192,000/2,284,134
+      推論 256,000/2,284,134
+      推論 320,000/2,284,134
+      推論 384,000/2,284,134
+      推論 448,000/2,284,134
+      推論 512,000/2,284,134
+      推論 576,000/2,284,134
+      推論 640,000/2,284,134
+      推論 704,000/2,284,134
+      推論 768,000/2,284,134
+      推論 832,000/2,284,134
+      推論 896,000/2,284,134
+      推論 960,000/2,284,134
+      推論 1,024,000/2,284,134
+      推論 1,088,000/2,284,134
+      推論 1,152,000/2,284,134
+      推論 1,216,000/2,284,134
+      推論 1,280,000/2,284,134
+      推論 1,344,000/2,284,134
+      推論 1,408,000/2,284,134
+      推論 1,472,000/2,284,134
+      推論 1,536,000/2,284,134
+      推論 1,600,000/2,284,134
+      推論 1,664,000/2,284,134
+      推論 1,728,000/2,284,134
+      推論 1,792,000/2,284,134
+      推論 1,856,000/2,284,134
+      推論 1,920,000/2,284,134
+      推論 1,984,000/2,284,134
+      推論 2,048,000/2,284,134
+      推論 2,112,000/2,284,134
+      推論 2,176,000/2,284,134
+      推論 2,240,000/2,284,134
+seed 1 完成（累計 1624 秒）
+Loading weights:   0%|          | 0/197 [00:00<?, ?it/s]Loading weights: 100%|██████████| 197/197 [00:00<00:00, 35922.00it/s]
+[transformers] [1mBertForSequenceClassification LOAD REPORT[0m from: ckiplab/bert-base-chinese
+Key                                        | Status     | 
+-------------------------------------------+------------+-
+cls.predictions.decoder.weight             | UNEXPECTED | 
+cls.predictions.decoder.bias               | UNEXPECTED | 
+cls.predictions.transform.dense.bias       | UNEXPECTED | 
+cls.predictions.transform.LayerNorm.bias   | UNEXPECTED | 
+cls.predictions.bias                       | UNEXPECTED | 
+cls.predictions.transform.dense.weight     | UNEXPECTED | 
+cls.predictions.transform.LayerNorm.weight | UNEXPECTED | 
+classifier.weight                          | MISSING    | 
+bert.pooler.dense.bias                     | MISSING    | 
+classifier.bias                            | MISSING    | 
+bert.pooler.dense.weight                   | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+      推論 0/2,284,134
+      推論 64,000/2,284,134
+      推論 128,000/2,284,134
+      推論 192,000/2,284,134
+      推論 256,000/2,284,134
+      推論 320,000/2,284,134
+      推論 384,000/2,284,134
+      推論 448,000/2,284,134
+      推論 512,000/2,284,134
+      推論 576,000/2,284,134
+      推論 640,000/2,284,134
+      推論 704,000/2,284,134
+      推論 768,000/2,284,134
+      推論 832,000/2,284,134
+      推論 896,000/2,284,134
+      推論 960,000/2,284,134
+      推論 1,024,000/2,284,134
+      推論 1,088,000/2,284,134
+      推論 1,152,000/2,284,134
+      推論 1,216,000/2,284,134
+      推論 1,280,000/2,284,134
+      推論 1,344,000/2,284,134
+      推論 1,408,000/2,284,134
+      推論 1,472,000/2,284,134
+      推論 1,536,000/2,284,134
+      推論 1,600,000/2,284,134
+      推論 1,664,000/2,284,134
+      推論 1,728,000/2,284,134
+      推論 1,792,000/2,284,134
+      推論 1,856,000/2,284,134
+      推論 1,920,000/2,284,134
+      推論 1,984,000/2,284,134
+      推論 2,048,000/2,284,134
+      推論 2,112,000/2,284,134
+      推論 2,176,000/2,284,134
+      推論 2,240,000/2,284,134
+seed 2 完成（累計 2397 秒）
+分布（正/負/中）：微調 [0.142, 0.18, 0.679]｜Breeze [0.196, 0.284, 0.52]
+與 Breeze 一致率 64.7%
+（檢查）金標樣本上最終模型與金標一致率 97.2%——這是訓練內的數字，不能當準確率，只確認流程接對
+（檢查）用 Breeze 標籤重算的 PTT 欄位與原資料集完全相同：False
+Traceback (most recent call last):
+  File "D:\專題claude\finetune_gold_infer.py", line 144, in <module>
+    assert same
+AssertionError

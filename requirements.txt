@@ -1,0 +1,12 @@
+pandas
+numpy
+scipy
+statsmodels
+scikit-learn
+xgboost
+torch
+transformers
+requests
+pypdf
+python-pptx
+jieba

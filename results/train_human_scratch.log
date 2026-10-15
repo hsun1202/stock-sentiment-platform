@@ -1,0 +1,77 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+=== ¨Ï¥Î¸Ë¸m¡Gcuda ===
+NVIDIA GeForce RTX 5060
+train: 332, val: 60, test: 60
+Loading weights:   0%|          | 0/197 [00:00<?, ?it/s]Loading weights: 100%|¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i| 197/197 [00:00<00:00, 49262.38it/s]
+[transformers] [1mBertForSequenceClassification LOAD REPORT[0m from: ckiplab/bert-base-chinese
+Key                                        | Status     | 
+-------------------------------------------+------------+-
+cls.predictions.transform.dense.weight     | UNEXPECTED | 
+cls.predictions.decoder.weight             | UNEXPECTED | 
+cls.predictions.decoder.bias               | UNEXPECTED | 
+cls.predictions.transform.LayerNorm.bias   | UNEXPECTED | 
+cls.predictions.transform.LayerNorm.weight | UNEXPECTED | 
+cls.predictions.bias                       | UNEXPECTED | 
+cls.predictions.transform.dense.bias       | UNEXPECTED | 
+classifier.bias                            | MISSING    | 
+classifier.weight                          | MISSING    | 
+bert.pooler.dense.weight                   | MISSING    | 
+bert.pooler.dense.bias                     | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+  0%|          | 0/630 [00:00<?, ?it/s]  0%|          | 1/630 [00:00<03:02,  3.44it/s]  1%|          | 4/630 [00:00<00:53, 11.75it/s]  1%|          | 7/630 [00:00<00:37, 16.44it/s]  2%|¢j         | 10/630 [00:00<00:32, 18.84it/s]  2%|¢j         | 13/630 [00:00<00:29, 20.78it/s]  3%|¢k         | 16/630 [00:00<00:27, 22.64it/s]  3%|¢k         | 19/630 [00:01<00:26, 23.19it/s]  3%|¢k         | 22/630 [00:01<00:24, 24.33it/s]  4%|¢l         | 25/630 [00:01<00:25, 24.03it/s]  4%|¢l         | 28/630 [00:01<00:23, 25.24it/s]  5%|¢l         | 31/630 [00:01<00:23, 25.23it/s]  5%|¢m         | 34/630 [00:01<00:23, 25.58it/s]  6%|¢m         | 37/630 [00:01<00:23, 25.09it/s]  6%|¢n         | 40/630 [00:01<00:23, 25.11it/s]
+  0%|          | 0/4 [00:00<?, ?it/s][AC:\Users\terry\AppData\Roaming\Python\Python310\site-packages\sklearn\metrics\_classification.py:1731: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", result.shape[0])
+                                                
+                                     [A  7%|¢n         | 42/630 [00:01<00:23, 25.11it/s]
+100%|¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i| 4/4 [00:00<00:00, 73.11it/s][A
+                                             [A{'eval_loss': '0.9433', 'eval_accuracy': '0.6333', 'eval_precision': '0.2111', 'eval_recall': '0.3333', 'eval_f1': '0.2585', 'eval_runtime': '0.0798', 'eval_samples_per_second': '752.2', 'eval_steps_per_second': '50.14', 'epoch': '1'}
+
+Writing model shards:   0%|          | 0/1 [00:00<?, ?it/s][A
+Writing model shards: 100%|¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i| 1/1 [00:00<00:00,  4.24it/s][AWriting model shards: 100%|¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i| 1/1 [00:00<00:00,  4.22it/s]
+  7%|¢n         | 43/630 [00:02<01:19,  7.35it/s]  7%|¢n         | 46/630 [00:03<01:02,  9.36it/s]  8%|¢o         | 49/630 [00:03<00:50, 11.52it/s]  8%|¢o         | 52/630 [00:03<00:41, 13.86it/s]  9%|¢o         | 55/630 [00:03<00:35, 16.17it/s]  9%|¢p         | 58/630 [00:03<00:31, 18.14it/s] 10%|¢p         | 61/630 [00:03<00:28, 19.69it/s] 10%|¢i         | 64/630 [00:03<00:27, 20.77it/s] 11%|¢i         | 67/630 [00:03<00:25, 22.42it/s] 11%|¢i         | 70/630 [00:03<00:24, 22.73it/s] 12%|¢i¢j        | 73/630 [00:04<00:23, 23.76it/s] 12%|¢i¢j        | 76/630 [00:04<00:22, 24.52it/s] 13%|¢i¢k        | 79/630 [00:04<00:22, 25.03it/s] 13%|¢i¢k        | 82/630 [00:04<00:21, 26.03it/s]
+  0%|          | 0/4 [00:00<?, ?it/s][AC:\Users\terry\AppData\Roaming\Python\Python310\site-packages\sklearn\metrics\_classification.py:1731: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", result.shape[0])
+                                                
+                                     [A 13%|¢i¢k        | 84/630 [00:04<00:20, 26.03it/s]
+100%|¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i| 4/4 [00:00<00:00, 123.02it/s][A
+                                              [A{'eval_loss': '0.8278', 'eval_accuracy': '0.65', 'eval_precision': '0.4106', 'eval_recall': '0.4282', 'eval_f1': '0.4046', 'eval_runtime': '0.0545', 'eval_samples_per_second': '1101', 'eval_steps_per_second': '73.38', 'epoch': '2'}
+
+Writing model shards:   0%|          | 0/1 [00:00<?, ?it/s][A
+Writing model shards: 100%|¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i| 1/1 [00:00<00:00,  8.09it/s][AWriting model shards: 100%|¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i| 1/1 [00:00<00:00,  8.09it/s]
+ 13%|¢i¢k        | 85/630 [00:05<00:55,  9.78it/s] 14%|¢i¢l        | 88/630 [00:05<00:44, 12.16it/s] 14%|¢i¢l        | 91/630 [00:05<00:36, 14.76it/s] 15%|¢i¢l        | 94/630 [00:05<00:31, 17.19it/s] 15%|¢i¢m        | 97/630 [00:05<00:27, 19.40it/s] 16%|¢i¢m        | 100/630 [00:05<00:24, 21.46it/s] 16%|¢i¢n        | 103/630 [00:05<00:22, 23.24it/s] 17%|¢i¢n        | 106/630 [00:05<00:21, 24.40it/s] 17%|¢i¢n        | 109/630 [00:06<00:20, 25.42it/s] 18%|¢i¢o        | 113/630 [00:06<00:19, 26.81it/s] 18%|¢i¢o        | 116/630 [00:06<00:18, 27.09it/s] 19%|¢i¢p        | 119/630 [00:06<00:18, 27.21it/s] 19%|¢i¢p        | 122/630 [00:06<00:18, 27.66it/s] 20%|¢i¢p        | 125/630 [00:06<00:18, 27.72it/s]
+  0%|          | 0/4 [00:00<?, ?it/s][A                                                 
+                                     [A 20%|¢i¢i        | 126/630 [00:06<00:18, 27.72it/s]
+100%|¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i| 4/4 [00:00<00:00, 126.95it/s][A
+                                              [A{'eval_loss': '0.8744', 'eval_accuracy': '0.6167', 'eval_precision': '0.4577', 'eval_recall': '0.4107', 'eval_f1': '0.4132', 'eval_runtime': '0.054', 'eval_samples_per_second': '1111', 'eval_steps_per_second': '74.05', 'epoch': '3'}
+
+Writing model shards:   0%|          | 0/1 [00:00<?, ?it/s][A
+Writing model shards: 100%|¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i| 1/1 [00:00<00:00,  8.33it/s][AWriting model shards: 100%|¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i| 1/1 [00:00<00:00,  8.33it/s]
+ 20%|¢i¢i        | 128/630 [00:07<00:53,  9.35it/s] 21%|¢i¢i        | 131/630 [00:07<00:42, 11.61it/s] 21%|¢i¢i¢j       | 134/630 [00:07<00:35, 14.00it/s] 22%|¢i¢i¢j       | 137/630 [00:07<00:30, 16.42it/s] 22%|¢i¢i¢j       | 140/630 [00:07<00:26, 18.72it/s] 23%|¢i¢i¢k       | 143/630 [00:07<00:23, 20.74it/s] 23%|¢i¢i¢k       | 146/630 [00:08<00:21, 22.32it/s] 24%|¢i¢i¢k       | 149/630 [00:08<00:20, 23.68it/s] 24%|¢i¢i¢l       | 152/630 [00:08<00:19, 25.04it/s] 25%|¢i¢i¢l       | 155/630 [00:08<00:18, 25.96it/s] 25%|¢i¢i¢m       | 158/630 [00:08<00:17, 26.68it/s] 26%|¢i¢i¢m       | 161/630 [00:08<00:17, 26.98it/s] 26%|¢i¢i¢m       | 164/630 [00:08<00:17, 27.21it/s] 27%|¢i¢i¢n       | 167/630 [00:08<00:17, 27.00it/s]
+  0%|          | 0/4 [00:00<?, ?it/s][A                                                 
+                                     [A 27%|¢i¢i¢n       | 168/630 [00:08<00:17, 27.00it/s]
+100%|¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i| 4/4 [00:00<00:00, 119.07it/s][A
+                                              [A{'eval_loss': '1.142', 'eval_accuracy': '0.6167', 'eval_precision': '0.5148', 'eval_recall': '0.4322', 'eval_f1': '0.4235', 'eval_runtime': '0.0546', 'eval_samples_per_second': '1099', 'eval_steps_per_second': '73.27', 'epoch': '4'}
+
+Writing model shards:   0%|          | 0/1 [00:00<?, ?it/s][A
+Writing model shards: 100%|¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i| 1/1 [00:00<00:00,  6.48it/s][AWriting model shards: 100%|¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i| 1/1 [00:00<00:00,  6.48it/s]
+ 27%|¢i¢i¢n       | 170/630 [00:09<00:53,  8.66it/s] 27%|¢i¢i¢n       | 173/630 [00:09<00:41, 10.97it/s] 28%|¢i¢i¢o       | 176/630 [00:09<00:34, 13.20it/s] 28%|¢i¢i¢o       | 179/630 [00:10<00:28, 15.68it/s] 29%|¢i¢i¢p       | 182/630 [00:10<00:25, 17.91it/s] 29%|¢i¢i¢p       | 185/630 [00:10<00:22, 20.10it/s] 30%|¢i¢i¢p       | 188/630 [00:10<00:20, 21.99it/s] 30%|¢i¢i¢i       | 191/630 [00:10<00:18, 23.66it/s] 31%|¢i¢i¢i       | 194/630 [00:10<00:17, 24.93it/s] 31%|¢i¢i¢i¢j      | 197/630 [00:10<00:16, 25.95it/s] 32%|¢i¢i¢i¢j      | 200/630 [00:10<00:16, 26.75it/s]                                                  32%|¢i¢i¢i¢j      | 200/630 [00:10<00:16, 26.75it/s] 32%|¢i¢i¢i¢j      | 203/630 [00:10<00:16, 26.33it/s] 33%|¢i¢i¢i¢k      | 206/630 [00:11<00:15, 27.21it/s] 33%|¢i¢i¢i¢k      | 209/630 [00:11<00:15, 27.63it/s]{'loss': '0.6191', 'grad_norm': '15.4', 'learning_rate': '1.368e-05', 'epoch': '4.762'}
+
+  0%|          | 0/4 [00:00<?, ?it/s][A                                                 
+                                     [A 33%|¢i¢i¢i¢k      | 210/630 [00:11<00:15, 27.63it/s]
+100%|¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i| 4/4 [00:00<00:00, 123.04it/s][A
+                                              [A{'eval_loss': '1.358', 'eval_accuracy': '0.5333', 'eval_precision': '0.4172', 'eval_recall': '0.4314', 'eval_f1': '0.4172', 'eval_runtime': '0.0541', 'eval_samples_per_second': '1110', 'eval_steps_per_second': '74', 'epoch': '5'}
+
+Writing model shards:   0%|          | 0/1 [00:00<?, ?it/s][A
+Writing model shards: 100%|¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i| 1/1 [00:00<00:00,  8.69it/s][AWriting model shards: 100%|¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i| 1/1 [00:00<00:00,  8.69it/s]
+                                                  33%|¢i¢i¢i¢k      | 210/630 [00:11<00:15, 27.63it/s] 33%|¢i¢i¢i¢k      | 210/630 [00:12<00:24, 17.50it/s]
+{'train_runtime': '11.86', 'train_samples_per_second': '419.8', 'train_steps_per_second': '53.11', 'train_loss': '0.5987', 'epoch': '5'}
+
+=== ´ú¸Õ¶°µû¦ô ===
+  0%|          | 0/4 [00:00<?, ?it/s]100%|¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i| 4/4 [00:00<00:00, 125.66it/s]
+{'eval_loss': 1.141558289527893, 'eval_accuracy': 0.6166666666666667, 'eval_precision': 0.5148291424887169, 'eval_recall': 0.43221690590111644, 'eval_f1': 0.4234745646510352, 'eval_runtime': 0.0463, 'eval_samples_per_second': 1294.685, 'eval_steps_per_second': 86.312, 'epoch': 5.0}
+Writing model shards:   0%|          | 0/1 [00:00<?, ?it/s]Writing model shards: 100%|¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i| 1/1 [00:00<00:00,  8.59it/s]Writing model shards: 100%|¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i| 1/1 [00:00<00:00,  8.59it/s]
+
+[§¹¦¨] ¼Ò«¬¤w¦s¨ì bert_sentiment_model_human_scratch\final

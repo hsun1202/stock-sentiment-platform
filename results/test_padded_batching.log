@@ -1,0 +1,15 @@
+樣本數 800，長度: min=1 max=200 median=18
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+W0923 18:29:22.613000 7164 site-packages\torch\utils\flop_counter.py:29] triton not found; flop counting will not work for triton kernels
+Loading weights:   0%|          | 0/291 [00:00<?, ?it/s]Loading weights:   0%|          | 1/291 [00:00<00:40,  7.23it/s]Loading weights:   1%|          | 2/291 [00:00<00:38,  7.48it/s]Loading weights:   2%|▏         | 6/291 [00:00<00:15, 18.20it/s]Loading weights:   5%|▌         | 15/291 [00:00<00:07, 38.34it/s]Loading weights:   8%|▊         | 23/291 [00:00<00:05, 50.84it/s]Loading weights:  11%|█         | 31/291 [00:00<00:04, 59.18it/s]Loading weights:  14%|█▎        | 40/291 [00:00<00:03, 63.03it/s]Loading weights:  17%|█▋        | 49/291 [00:00<00:03, 65.58it/s]Loading weights:  20%|█▉        | 58/291 [00:01<00:03, 66.03it/s]Loading weights:  22%|██▏       | 65/291 [00:01<00:03, 66.82it/s]Loading weights:  25%|██▍       | 72/291 [00:01<00:03, 63.47it/s]Loading weights:  27%|██▋       | 79/291 [00:01<00:03, 62.83it/s]Loading weights:  30%|██▉       | 87/291 [00:01<00:03, 62.97it/s]Loading weights:  33%|███▎      | 96/291 [00:01<00:03, 64.19it/s]Loading weights:  36%|███▌      | 105/291 [00:01<00:02, 66.78it/s]Loading weights:  39%|███▉      | 114/291 [00:01<00:02, 68.78it/s]Loading weights:  42%|████▏     | 123/291 [00:02<00:02, 70.14it/s]Loading weights:  45%|████▌     | 132/291 [00:02<00:02, 70.66it/s]Loading weights:  48%|████▊     | 141/291 [00:02<00:02, 69.72it/s]Loading weights:  52%|█████▏    | 150/291 [00:02<00:02, 69.44it/s]Loading weights:  55%|█████▍    | 159/291 [00:02<00:01, 70.23it/s]Loading weights:  58%|█████▊    | 168/291 [00:02<00:01, 71.61it/s]Loading weights:  61%|██████    | 177/291 [00:02<00:01, 72.60it/s]Loading weights:  64%|██████▍   | 186/291 [00:02<00:01, 72.25it/s]Loading weights:  67%|██████▋   | 194/291 [00:03<00:01, 74.20it/s]Loading weights:  70%|██████▉   | 203/291 [00:03<00:01, 71.88it/s]Loading weights:  73%|███████▎  | 212/291 [00:03<00:01, 71.09it/s]Loading weights:  76%|███████▌  | 221/291 [00:03<00:00, 70.54it/s]Loading weights:  79%|███████▉  | 230/291 [00:03<00:00, 70.07it/s]Loading weights:  82%|████████▏ | 239/291 [00:03<00:00, 69.19it/s]Loading weights:  85%|████████▌ | 248/291 [00:03<00:00, 70.50it/s]Loading weights:  88%|████████▊ | 257/291 [00:03<00:00, 71.86it/s]Loading weights:  91%|█████████▏| 266/291 [00:04<00:00, 72.86it/s]Loading weights:  95%|█████████▍| 275/291 [00:04<00:00, 73.63it/s]Loading weights:  98%|█████████▊| 284/291 [00:04<00:00, 72.88it/s]Loading weights: 100%|██████████| 291/291 [00:04<00:00, 66.27it/s]
+[舊版 精確長度分桶] 35.8秒 -> 22.3則/秒
+[新版 排序+padding分批] 347.0秒 -> 2.3則/秒
+
+兩版標籤一致率: 794/800 = 99.25%
+  不一致: ('常榮航 部會漲 怎100多快', 'negative', 'positive')
+  不一致: ('扶不上牆', 'negative', 'neutral')
+  不一致: ('老實說50真的太夢幻了，40就要偷笑了', 'positive', 'negative')
+  不一致: ('笑屎', 'neutral', 'negative')
+  不一致: ('1、費半小幅度上漲0.13% 2、德州儀器開財報 週三特斯拉', 'neutral', 'positive')
+  不一致: ('為什麼美股今天跌那麼多？ 是有公布什麼利空指數嗎？', 'neutral', 'negative')
+完成

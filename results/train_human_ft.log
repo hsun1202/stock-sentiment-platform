@@ -1,0 +1,29 @@
+=== ¨Ï¥Î¸Ë¸m¡Gcuda ===
+NVIDIA GeForce RTX 5060
+train: 200, val: 48, test: 48
+Loading weights:   0%|          | 0/201 [00:00<?, ?it/s]Loading weights: 100%|¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i| 201/201 [00:00<00:00, 12559.67it/s]
+  0%|          | 0/200 [00:00<?, ?it/s]  0%|          | 1/200 [00:00<02:04,  1.59it/s]  2%|¢j         | 4/200 [00:00<00:28,  6.80it/s]  4%|¢k         | 7/200 [00:00<00:17, 11.09it/s]  5%|¢m         | 10/200 [00:00<00:12, 14.87it/s]  6%|¢n         | 13/200 [00:01<00:10, 17.80it/s]  8%|¢o         | 16/200 [00:01<00:08, 20.46it/s] 10%|¢p         | 19/200 [00:01<00:08, 21.65it/s] 11%|¢i         | 22/200 [00:01<00:07, 22.84it/s] 12%|¢i¢k        | 25/200 [00:01<00:07, 23.19it/s]
+  0%|          | 0/3 [00:00<?, ?it/s][A                                                
+                                     [A 12%|¢i¢k        | 25/200 [00:01<00:07, 23.19it/s]
+100%|¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i| 3/3 [00:00<00:00, 125.00it/s][A
+                                              [A{'eval_loss': '4.283', 'eval_accuracy': '0.5', 'eval_precision': '0.4055', 'eval_recall': '0.3979', 'eval_f1': '0.392', 'eval_runtime': '0.0546', 'eval_samples_per_second': '879.2', 'eval_steps_per_second': '54.95', 'epoch': '1'}
+
+Writing model shards:   0%|          | 0/1 [00:00<?, ?it/s][A
+Writing model shards: 100%|¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i| 1/1 [00:00<00:00,  6.16it/s][AWriting model shards: 100%|¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i| 1/1 [00:00<00:00,  6.16it/s]
+ 14%|¢i¢l        | 28/200 [00:02<00:20,  8.43it/s] 16%|¢i¢m        | 31/200 [00:02<00:15, 10.71it/s] 17%|¢i¢n        | 34/200 [00:02<00:12, 12.93it/s] 18%|¢i¢o        | 37/200 [00:02<00:10, 15.17it/s] 20%|¢i¢i        | 40/200 [00:02<00:09, 16.96it/s] 22%|¢i¢i¢j       | 43/200 [00:03<00:08, 18.38it/s] 23%|¢i¢i¢k       | 46/200 [00:03<00:07, 19.95it/s] 24%|¢i¢i¢l       | 49/200 [00:03<00:07, 20.97it/s]
+  0%|          | 0/3 [00:00<?, ?it/s][A                                                
+                                     [A 25%|¢i¢i¢m       | 50/200 [00:03<00:07, 20.97it/s]
+100%|¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i| 3/3 [00:00<00:00, 122.40it/s][A
+                                              [A{'eval_loss': '3.256', 'eval_accuracy': '0.5417', 'eval_precision': '0.388', 'eval_recall': '0.4033', 'eval_f1': '0.3854', 'eval_runtime': '0.0475', 'eval_samples_per_second': '1010', 'eval_steps_per_second': '63.14', 'epoch': '2'}
+
+Writing model shards:   0%|          | 0/1 [00:00<?, ?it/s][A
+Writing model shards: 100%|¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i| 1/1 [00:00<00:00,  7.46it/s][AWriting model shards: 100%|¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i| 1/1 [00:00<00:00,  7.46it/s]
+                                                 25%|¢i¢i¢m       | 50/200 [00:03<00:07, 20.97it/s] 25%|¢i¢i¢m       | 50/200 [00:04<00:12, 12.10it/s]
+{'train_runtime': '3.996', 'train_samples_per_second': '400.4', 'train_steps_per_second': '50.05', 'train_loss': '2.877', 'epoch': '2'}
+
+=== ´ú¸Õ¶°µû¦ô ===
+  0%|          | 0/3 [00:00<?, ?it/s]100%|¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i| 3/3 [00:00<00:00, 122.41it/s]
+{'eval_loss': 4.282919406890869, 'eval_accuracy': 0.5, 'eval_precision': 0.40549450549450544, 'eval_recall': 0.39790764790764793, 'eval_f1': 0.39197530864197533, 'eval_runtime': 0.042, 'eval_samples_per_second': 1142.324, 'eval_steps_per_second': 71.395, 'epoch': 2.0}
+Writing model shards:   0%|          | 0/1 [00:00<?, ?it/s]Writing model shards: 100%|¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i| 1/1 [00:00<00:00,  7.83it/s]Writing model shards: 100%|¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i| 1/1 [00:00<00:00,  7.77it/s]
+
+[§¹¦¨] ¼Ò«¬¤w¦s¨ì bert_sentiment_model_human_ft\final

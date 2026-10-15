@@ -1,0 +1,122 @@
+W1004 13:31:39.579000 32184 site-packages\torch\utils\flop_counter.py:29] triton not found; flop counting will not work for triton kernels
+文章 1,219,761 → 去重 1,219,761；廣告/機器人 8,696（0.7%）、空白 2,625
+可用 1,208,440 篇、265 檔；內文長度中位數 20 字；作者自標 多 11.3%／空 1.4%
+不重複內文 1,053,398
+Loading weights:   0%|          | 0/197 [00:00<?, ?it/s]Loading weights: 100%|██████████| 197/197 [00:00<00:00, 49171.50it/s]
+[transformers] [1mBertForSequenceClassification LOAD REPORT[0m from: ckiplab/bert-base-chinese
+Key                                        | Status     | 
+-------------------------------------------+------------+-
+cls.predictions.decoder.weight             | UNEXPECTED | 
+cls.predictions.transform.dense.weight     | UNEXPECTED | 
+cls.predictions.transform.LayerNorm.bias   | UNEXPECTED | 
+cls.predictions.bias                       | UNEXPECTED | 
+cls.predictions.transform.LayerNorm.weight | UNEXPECTED | 
+cls.predictions.decoder.bias               | UNEXPECTED | 
+cls.predictions.transform.dense.bias       | UNEXPECTED | 
+bert.pooler.dense.bias                     | MISSING    | 
+classifier.bias                            | MISSING    | 
+classifier.weight                          | MISSING    | 
+bert.pooler.dense.weight                   | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+      推論 0/1,053,398
+      推論 64,000/1,053,398
+      推論 128,000/1,053,398
+      推論 192,000/1,053,398
+      推論 256,000/1,053,398
+      推論 320,000/1,053,398
+      推論 384,000/1,053,398
+      推論 448,000/1,053,398
+      推論 512,000/1,053,398
+      推論 576,000/1,053,398
+      推論 640,000/1,053,398
+      推論 704,000/1,053,398
+      推論 768,000/1,053,398
+      推論 832,000/1,053,398
+      推論 896,000/1,053,398
+      推論 960,000/1,053,398
+      推論 1,024,000/1,053,398
+seed 0 完成（累計 387 秒）
+Loading weights:   0%|          | 0/197 [00:00<?, ?it/s]Loading weights: 100%|██████████| 197/197 [00:00<00:00, 33304.23it/s]
+[transformers] [1mBertForSequenceClassification LOAD REPORT[0m from: ckiplab/bert-base-chinese
+Key                                        | Status     | 
+-------------------------------------------+------------+-
+cls.predictions.decoder.weight             | UNEXPECTED | 
+cls.predictions.transform.dense.weight     | UNEXPECTED | 
+cls.predictions.transform.LayerNorm.bias   | UNEXPECTED | 
+cls.predictions.bias                       | UNEXPECTED | 
+cls.predictions.transform.LayerNorm.weight | UNEXPECTED | 
+cls.predictions.decoder.bias               | UNEXPECTED | 
+cls.predictions.transform.dense.bias       | UNEXPECTED | 
+bert.pooler.dense.bias                     | MISSING    | 
+classifier.bias                            | MISSING    | 
+classifier.weight                          | MISSING    | 
+bert.pooler.dense.weight                   | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+      推論 0/1,053,398
+      推論 64,000/1,053,398
+      推論 128,000/1,053,398
+      推論 192,000/1,053,398
+      推論 256,000/1,053,398
+      推論 320,000/1,053,398
+      推論 384,000/1,053,398
+      推論 448,000/1,053,398
+      推論 512,000/1,053,398
+      推論 576,000/1,053,398
+      推論 640,000/1,053,398
+      推論 704,000/1,053,398
+      推論 768,000/1,053,398
+      推論 832,000/1,053,398
+      推論 896,000/1,053,398
+      推論 960,000/1,053,398
+      推論 1,024,000/1,053,398
+seed 1 完成（累計 761 秒）
+Loading weights:   0%|          | 0/197 [00:00<?, ?it/s]Loading weights: 100%|██████████| 197/197 [00:00<00:00, 34276.86it/s]
+[transformers] [1mBertForSequenceClassification LOAD REPORT[0m from: ckiplab/bert-base-chinese
+Key                                        | Status     | 
+-------------------------------------------+------------+-
+cls.predictions.decoder.weight             | UNEXPECTED | 
+cls.predictions.transform.dense.weight     | UNEXPECTED | 
+cls.predictions.transform.LayerNorm.bias   | UNEXPECTED | 
+cls.predictions.bias                       | UNEXPECTED | 
+cls.predictions.transform.LayerNorm.weight | UNEXPECTED | 
+cls.predictions.decoder.bias               | UNEXPECTED | 
+cls.predictions.transform.dense.bias       | UNEXPECTED | 
+bert.pooler.dense.bias                     | MISSING    | 
+classifier.bias                            | MISSING    | 
+classifier.weight                          | MISSING    | 
+bert.pooler.dense.weight                   | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+      推論 0/1,053,398
+      推論 64,000/1,053,398
+      推論 128,000/1,053,398
+      推論 192,000/1,053,398
+      推論 256,000/1,053,398
+      推論 320,000/1,053,398
+      推論 384,000/1,053,398
+      推論 448,000/1,053,398
+      推論 512,000/1,053,398
+      推論 576,000/1,053,398
+      推論 640,000/1,053,398
+      推論 704,000/1,053,398
+      推論 768,000/1,053,398
+      推論 832,000/1,053,398
+      推論 896,000/1,053,398
+      推論 960,000/1,053,398
+      推論 1,024,000/1,053,398
+seed 2 完成（累計 1134 秒）
+分類分布（正/負/中）：[0.268, 0.229, 0.503]
+與作者自標比較（154,082 篇有自標）：自標看多的 → 模型 正 31%／負 12%；自標看空的 → 模型 正 13%／負 43%
+分到交易日後 1,208,440 篇；盤前（前一日收盤後~開盤前）39.3%、盤中 60.7%
+final_dataset_v3_cm：有表態的股票日 136,671（265 檔）；有文章的股票日 178,875
+final_dataset_v3_cmbb：有表態的股票日 67,883（265 檔）；有文章的股票日 178,875
+final_dataset_v3_p20（PTT，只留 2020-2024）：有表態的股票日 17,080
+完成，共 1180 秒

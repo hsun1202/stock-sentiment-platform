@@ -1,0 +1,19 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+W0919 11:33:39.893000 25328 site-packages\torch\utils\flop_counter.py:29] triton not found; flop counting will not work for triton kernels
+Loading weights:   0%|          | 0/291 [00:00<?, ?it/s]Loading weights:   0%|          | 1/291 [00:00<00:34,  8.43it/s]Loading weights:   1%|          | 2/291 [00:00<00:34,  8.46it/s]Loading weights:   2%|▏         | 6/291 [00:00<00:13, 20.71it/s]Loading weights:   5%|▌         | 15/291 [00:00<00:06, 43.85it/s]Loading weights:   8%|▊         | 24/291 [00:00<00:04, 56.81it/s]Loading weights:  11%|█▏        | 33/291 [00:00<00:03, 64.51it/s]Loading weights:  14%|█▍        | 42/291 [00:00<00:03, 67.73it/s]Loading weights:  18%|█▊        | 51/291 [00:00<00:03, 71.59it/s]Loading weights:  21%|██        | 60/291 [00:01<00:03, 73.78it/s]Loading weights:  24%|██▎       | 69/291 [00:01<00:02, 75.38it/s]Loading weights:  27%|██▋       | 78/291 [00:01<00:02, 76.86it/s]Loading weights:  30%|██▉       | 87/291 [00:01<00:02, 77.69it/s]Loading weights:  33%|███▎      | 96/291 [00:01<00:02, 77.99it/s]Loading weights:  36%|███▌      | 105/291 [00:01<00:02, 78.93it/s]Loading weights:  39%|███▉      | 114/291 [00:01<00:02, 79.39it/s]Loading weights:  42%|████▏     | 123/291 [00:01<00:02, 79.97it/s]Loading weights:  45%|████▌     | 132/291 [00:01<00:01, 79.88it/s]Loading weights:  48%|████▊     | 141/291 [00:02<00:01, 79.55it/s]Loading weights:  52%|█████▏    | 150/291 [00:02<00:01, 79.40it/s]Loading weights:  55%|█████▍    | 159/291 [00:02<00:01, 79.58it/s]Loading weights:  58%|█████▊    | 168/291 [00:02<00:01, 79.26it/s]Loading weights:  61%|██████    | 177/291 [00:02<00:01, 79.40it/s]Loading weights:  64%|██████▍   | 186/291 [00:02<00:01, 79.46it/s]Loading weights:  67%|██████▋   | 195/291 [00:02<00:01, 80.13it/s]Loading weights:  70%|███████   | 204/291 [00:02<00:01, 80.43it/s]Loading weights:  73%|███████▎  | 213/291 [00:02<00:00, 80.41it/s]Loading weights:  76%|███████▋  | 222/291 [00:03<00:00, 80.34it/s]Loading weights:  79%|███████▉  | 231/291 [00:03<00:00, 79.74it/s]Loading weights:  82%|████████▏ | 240/291 [00:03<00:00, 79.84it/s]Loading weights:  86%|████████▌ | 249/291 [00:03<00:00, 79.81it/s]Loading weights:  89%|████████▊ | 258/291 [00:03<00:00, 79.55it/s]Loading weights:  92%|█████████▏| 267/291 [00:03<00:00, 79.05it/s]Loading weights:  95%|█████████▍| 276/291 [00:03<00:00, 79.11it/s]Loading weights:  98%|█████████▊| 285/291 [00:03<00:00, 78.60it/s]Loading weights: 100%|██████████| 291/291 [00:03<00:00, 74.96it/s]
+候選token: {'positive': [(977, '▁pos'), (1065, 'pos'), (5278, '▁positive')], 'negative': [(3444, '▁neg'), (7087, '▁negative'), (12415, 'neg'), (23238, 'negative')], 'neutral': [(14214, '▁neutral'), (21194, '▁neu')]}
+進度 16/1100
+進度 176/1100
+進度 336/1100
+進度 496/1100
+進度 656/1100
+進度 816/1100
+進度 976/1100
+
+=== 強制三選一（無校正）：Accuracy 56.0%  Macro-F1 0.531 ===
+預測分佈: {'neutral': 474, 'negative': 448, 'positive': 178}  Claude分佈: {'neutral': 556, 'negative': 317, 'positive': 227}
+混淆矩陣 (列=Claude, 欄=預測; 順序 pos,neg,neu):
+[[ 86  69  72]
+ [ 31 207  79]
+ [ 61 172 323]]
+模型第一個想輸出的token(前8): {'看': 747, 'neut': 239, '正': 30, '無法': 25, '<0x0A>': 18, '負面': 8, '中立': 7, 'negative': 7}

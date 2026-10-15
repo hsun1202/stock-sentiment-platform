@@ -1,0 +1,101 @@
+=== PTT Stock板全板爬蟲開始（不篩股票，含使用者ID）===
+資料範圍：2015-01-01 ~ 2018-12-31
+輸出資料夾：ptt_stock_full_2015_2018/
+
+
+----- 階段一：掃描列表頁（全部記錄，不篩股票） -----
+[階段一] 最新頁碼：10408，本次從第 216 頁開始掃描
+    [除錯] 本頁 20 篇，日期範例：['2019-01-03', '2019-01-03', '2019-01-03']
+    [階段一進度] 已掃描 50 頁（本次執行），累積記錄 993 篇，目前爬到日期：2017-09-14
+    [階段一進度] 已掃描 100 頁（本次執行），累積記錄 1993 篇，目前爬到日期：2015-12-02
+    [停止] 第79頁日期已早於2015-01-01，掃描完成
+[階段一完成] 本次新增記錄 2710 篇文章
+
+----- 階段二：逐篇抓取內文與留言 -----
+[階段二-續傳] 已確認 0 篇文章的資料已存在，會自動跳過
+[階段二] 列表共 2710 篇，尚待抓取 2710 篇
+    [階段二進度] 已抓取 50/2710 篇
+    [階段二進度] 已抓取 100/2710 篇
+    [階段二進度] 已抓取 150/2710 篇
+    [階段二進度] 已抓取 200/2710 篇
+    [階段二進度] 已抓取 250/2710 篇
+    [階段二進度] 已抓取 300/2710 篇
+    [階段二進度] 已抓取 350/2710 篇
+    [階段二進度] 已抓取 400/2710 篇
+    [階段二進度] 已抓取 450/2710 篇
+    [階段二進度] 已抓取 500/2710 篇
+    [階段二進度] 已抓取 550/2710 篇
+    [階段二進度] 已抓取 600/2710 篇
+    [階段二進度] 已抓取 650/2710 篇
+    [警告] 抓取失敗 (1/3): 520 Server Error: <none> for url: https://www.ptt.cc/bbs/Stock/M.1526018407.A.97A.html
+    [階段二進度] 已抓取 700/2710 篇
+    [階段二進度] 已抓取 750/2710 篇
+    [階段二進度] 已抓取 800/2710 篇
+    [警告] 抓取失敗 (1/3): 520 Server Error: <none> for url: https://www.ptt.cc/bbs/Stock/M.1519797302.A.7C1.html
+    [階段二進度] 已抓取 850/2710 篇
+    [警告] 抓取失敗 (1/3): 404 Client Error: Not Found for url: https://www.ptt.cc/bbs/Stock/M.1508863784.A.D2C.html
+    [警告] 抓取失敗 (2/3): 404 Client Error: Not Found for url: https://www.ptt.cc/bbs/Stock/M.1508863784.A.D2C.html
+    [警告] 抓取失敗 (3/3): 404 Client Error: Not Found for url: https://www.ptt.cc/bbs/Stock/M.1508863784.A.D2C.html
+    [失敗] 已達最大重試次數，放棄：https://www.ptt.cc/bbs/Stock/M.1508863784.A.D2C.html（404 Client Error: Not Found for url: https://www.ptt.cc/bbs/Stock/M.1508863784.A.D2C.html）
+    [警告] 抓取失敗 (1/3): 404 Client Error: Not Found for url: https://www.ptt.cc/bbs/Stock/M.1508864241.A.2CA.html
+    [警告] 抓取失敗 (2/3): 404 Client Error: Not Found for url: https://www.ptt.cc/bbs/Stock/M.1508864241.A.2CA.html
+    [警告] 抓取失敗 (3/3): 404 Client Error: Not Found for url: https://www.ptt.cc/bbs/Stock/M.1508864241.A.2CA.html
+    [失敗] 已達最大重試次數，放棄：https://www.ptt.cc/bbs/Stock/M.1508864241.A.2CA.html（404 Client Error: Not Found for url: https://www.ptt.cc/bbs/Stock/M.1508864241.A.2CA.html）
+    [警告] 抓取失敗 (1/3): 404 Client Error: Not Found for url: https://www.ptt.cc/bbs/Stock/M.1508864422.A.31E.html
+    [警告] 抓取失敗 (2/3): 404 Client Error: Not Found for url: https://www.ptt.cc/bbs/Stock/M.1508864422.A.31E.html
+    [警告] 抓取失敗 (3/3): 404 Client Error: Not Found for url: https://www.ptt.cc/bbs/Stock/M.1508864422.A.31E.html
+    [失敗] 已達最大重試次數，放棄：https://www.ptt.cc/bbs/Stock/M.1508864422.A.31E.html（404 Client Error: Not Found for url: https://www.ptt.cc/bbs/Stock/M.1508864422.A.31E.html）
+    [警告] 抓取失敗 (1/3): 404 Client Error: Not Found for url: https://www.ptt.cc/bbs/Stock/M.1509180628.A.3CD.html
+    [警告] 抓取失敗 (2/3): 404 Client Error: Not Found for url: https://www.ptt.cc/bbs/Stock/M.1509180628.A.3CD.html
+    [警告] 抓取失敗 (3/3): 404 Client Error: Not Found for url: https://www.ptt.cc/bbs/Stock/M.1509180628.A.3CD.html
+    [失敗] 已達最大重試次數，放棄：https://www.ptt.cc/bbs/Stock/M.1509180628.A.3CD.html（404 Client Error: Not Found for url: https://www.ptt.cc/bbs/Stock/M.1509180628.A.3CD.html）
+    [警告] 抓取失敗 (1/3): 404 Client Error: Not Found for url: https://www.ptt.cc/bbs/Stock/M.1509200920.A.FB4.html
+    [警告] 抓取失敗 (2/3): 404 Client Error: Not Found for url: https://www.ptt.cc/bbs/Stock/M.1509200920.A.FB4.html
+    [警告] 抓取失敗 (3/3): 404 Client Error: Not Found for url: https://www.ptt.cc/bbs/Stock/M.1509200920.A.FB4.html
+    [失敗] 已達最大重試次數，放棄：https://www.ptt.cc/bbs/Stock/M.1509200920.A.FB4.html（404 Client Error: Not Found for url: https://www.ptt.cc/bbs/Stock/M.1509200920.A.FB4.html）
+    [警告] 抓取失敗 (1/3): 404 Client Error: Not Found for url: https://www.ptt.cc/bbs/Stock/M.1509291050.A.703.html
+    [警告] 抓取失敗 (2/3): 404 Client Error: Not Found for url: https://www.ptt.cc/bbs/Stock/M.1509291050.A.703.html
+    [警告] 抓取失敗 (3/3): 404 Client Error: Not Found for url: https://www.ptt.cc/bbs/Stock/M.1509291050.A.703.html
+    [失敗] 已達最大重試次數，放棄：https://www.ptt.cc/bbs/Stock/M.1509291050.A.703.html（404 Client Error: Not Found for url: https://www.ptt.cc/bbs/Stock/M.1509291050.A.703.html）
+    [階段二進度] 已抓取 900/2710 篇
+    [階段二進度] 已抓取 950/2710 篇
+    [階段二進度] 已抓取 1000/2710 篇
+    [階段二進度] 已抓取 1050/2710 篇
+    [階段二進度] 已抓取 1100/2710 篇
+    [階段二進度] 已抓取 1150/2710 篇
+    [階段二進度] 已抓取 1200/2710 篇
+    [階段二進度] 已抓取 1250/2710 篇
+    [階段二進度] 已抓取 1300/2710 篇
+    [階段二進度] 已抓取 1350/2710 篇
+    [階段二進度] 已抓取 1400/2710 篇
+    [階段二進度] 已抓取 1450/2710 篇
+    [階段二進度] 已抓取 1500/2710 篇
+    [階段二進度] 已抓取 1550/2710 篇
+    [警告] 抓取失敗 (1/3): 525 Server Error: <none> for url: https://www.ptt.cc/bbs/Stock/M.1471491673.A.8E9.html
+    [階段二進度] 已抓取 1600/2710 篇
+    [階段二進度] 已抓取 1650/2710 篇
+    [階段二進度] 已抓取 1700/2710 篇
+    [階段二進度] 已抓取 1750/2710 篇
+    [階段二進度] 已抓取 1800/2710 篇
+    [階段二進度] 已抓取 1850/2710 篇
+    [階段二進度] 已抓取 1900/2710 篇
+    [階段二進度] 已抓取 1950/2710 篇
+    [警告] 抓取失敗 (1/3): 520 Server Error: <none> for url: https://www.ptt.cc/bbs/Stock/M.1449200504.A.9DD.html
+    [階段二進度] 已抓取 2000/2710 篇
+    [階段二進度] 已抓取 2050/2710 篇
+    [階段二進度] 已抓取 2100/2710 篇
+    [階段二進度] 已抓取 2150/2710 篇
+    [階段二進度] 已抓取 2200/2710 篇
+    [階段二進度] 已抓取 2250/2710 篇
+    [階段二進度] 已抓取 2300/2710 篇
+    [階段二進度] 已抓取 2350/2710 篇
+    [階段二進度] 已抓取 2400/2710 篇
+    [階段二進度] 已抓取 2450/2710 篇
+    [階段二進度] 已抓取 2500/2710 篇
+    [階段二進度] 已抓取 2550/2710 篇
+    [階段二進度] 已抓取 2600/2710 篇
+    [階段二進度] 已抓取 2650/2710 篇
+    [階段二進度] 已抓取 2700/2710 篇
+[階段二完成] 本次共抓取 2710 篇文章的內文與留言
+
+=== 本次執行結束，總耗時 1.04 小時 ===
