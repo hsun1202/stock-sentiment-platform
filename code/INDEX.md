@@ -278,3 +278,4 @@
 | `run_preopen_chain.sh` | 補抓開盤前 → 分類＋重建 final_dataset_v3_cm3 → XGBoost 與洩漏檢查（cm3）。LSTM 不在這裡（使用者晚上說了再跑：CM_TAG=cm3 bash run_cmoney_full.sh）。 |
 | `xgb_direction_cm.py` | XGBoost 隔天開盤→收盤漲跌：CMoney 貼文情緒 vs PTT，同一批 265 檔、同一段 2020-2024。 設定同 retail_test_v4.py（features_v4.build 的技術面特徵與目標 B、XGB 超參數、依週 bootstrap），只改： 只用 2020 以後的資料（CMoney 只有這段）、測試年 2022-2024、多一組 +CMoney。事先寫定的假說見 cmoney_full/PREREG… |
 | `xgb_leak_check.py` | 檢查 xgb_direction_cm.py 的 +CMoney 是否來自抽樣洩漏（事後追加的檢查，2026-10-19，看到 X1 通過後才寫——要如實標註）。 疑慮：CMoney 爬蟲每個交易日只抓「收盤前最後 20 篇」。t+1 開盤前的貼文有沒有被抓到，取決於 t+1 盤中貼文多不多（盤中熱 → 開盤前的被擠掉）， 而 t+1 盤中熱不熱鬧跟 t+1 漲跌有關 → 「t+1 開盤前」特徵偷看到了 t+1 的資訊。PTT 是全量抓… |
+| `xgb_strategy_cm.py` | 拿 XGBoost 漲跌模型（技術面 vs +CMoney，cm3）去預測隔天開盤→收盤的漲跌與報酬，並做當沖回測。事先寫定見 PREREG_cmoney_full.md 第 C 節。 模型、特徵、切法同 xgb_direction_cm.py（測試 2022–2024、5 seeds）。 |
