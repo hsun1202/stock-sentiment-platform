@@ -10,7 +10,7 @@ src = _open("cmoney_full/lowfreq_cm.py", encoding="utf-8").read().split("BASE = 
 exec(src)
 L = []
 def say2(s): print(s, flush=True); L.append(s)
-for freq, nm in [("W-FRI", "週頻"), ("M", "月頻")]:
+for freq, nm in [("W-FRI", "週頻"), ("M", "月頻"), ("Q", "季頻")]:
     P = panel(freq)
     P["logcap"] = np.log(P.mktcap)
     U = P[P.ret_next.notna() & P.liq_ok & (P.year >= 2020)].copy()

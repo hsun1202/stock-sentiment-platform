@@ -14,6 +14,7 @@
 | `check_crawler_267_progress.py` | 查詢267檔PTT重爬任務（batch_crawler_267.py）的即時進度 使用方式： | — |
 | `cmoney_probe.py` | CMoney 同學會可行性測試（小規模，約 200 次請求）：直接跳到指定交易日的收盤時間，只抓收盤前最後一頁。 要確認：1) 2015 年起抓不抓得到、每頁幾篇  2) 回傳文章的時間是否都在指定時間之前、跨了多久 3) 冷門股有沒有資料  4) 作者自己標的多空（bullOrBear）有多少比例 需要 cmoney_token.json 內有未過期的 access_token（由使用者登入後更新）。 輸出：cmoney_probe.… | `cmoney_probe.log` |
 | `crawl_cmoney.py` | CMoney股市爆料同學會爬蟲（需要登入token，抓267檔股票2024年的討論） | — |
+| `crawl_cmoney_2025.py` | CMoney 同學會「每個交易日收盤前」抽樣爬蟲——2025 年版（2025-01-01 ~ 2025-12-31；由 crawl_cmoney_daily.py 複製，只改期間、日曆、輸出資料夾） 作法：每檔股票從 2024 年底往回走。目前位置 T（時間）： 抓「T 之前最新的一頁（20 篇）」→ 若這頁最舊的文章還沒碰到上一個交易日收盤，就直接跳到上一個交易日收盤（熱門股：每天一頁）； 否則從這頁最舊的文章接著往回翻（冷門股：連續… | — |
 | `crawl_cmoney_comments.py` | 補抓CMoney文章底下的留言（crawl_cmoney.py只抓了文章本身，沒抓留言內容） | — |
 | `crawl_cmoney_daily.py` | CMoney 同學會「每個交易日收盤前」抽樣爬蟲（2020-01-01 ~ 2024-12-31，資料集內全部股票） 作法：每檔股票從 2024 年底往回走。目前位置 T（時間）： 抓「T 之前最新的一頁（20 篇）」→ 若這頁最舊的文章還沒碰到上一個交易日收盤，就直接跳到上一個交易日收盤（熱門股：每天一頁）； 否則從這頁最舊的文章接著往回翻（冷門股：連續翻頁，不漏文章）。 cursor ＝ 毫秒時間 × 1048.576（2026-0… | — |
 | `crawl_cmoney_preopen.py` | CMoney 補抓：熱門股「開盤前被擠掉」的股票日，各補抓一頁 ——「當天 09:00 之前最新的 20 篇」。 原爬蟲（crawl_cmoney_daily.py）熱門股每天只抓收盤前最後 20 篇，盤中熱的日子開盤前貼文全被擠掉， 造成「t+1 開盤前」特徵偷看到 t+1 盤中熱度（見 cmoney_full/xgb_leak_check.log）。補抓後每個股票日開盤前都至少有最新的一頁。 目標：抓到 ≥20 篇、且最舊一篇已在當… | — |
@@ -41,6 +42,7 @@
 |---|---|---|
 | `audit_breeze_replies.py` | — | `audit_breeze_replies.log` |
 | `audit_yahoo_2014_2019.py` | 稽核 Yahoo 股價 2014-06~2019-12：對照證交所官方交易日曆，找出 (1) 官方有開市但 Yahoo 大多數股票缺資料的日子（例如2020-2024版的2021-04-06） (2) Yahoo 有、官方沒開市的日子 (3) 大量股票「成交量=0且收盤價=前一天」的壞資料日（例如2021-08-17） Yahoo 原始資料快取在 yahoo_raw_2014_2025.pkl（之後 fix_prices_2015.py… | — |
+| `build_2025.py` | 2025 年 CMoney：收盤前抽樣（cmoney_daily_2025/）＋熱門股開盤前補頁（cmoney_daily_pre_2025/）→ 清理 → 分類 → 股票日則數。 流程與 2020–2024 相同（cmoney_daily_build.py、cmoney_daily_build2.py、rebuild_cm3.py）：廣告/空白 → 清理 flag（與舊資料合併計算全體統計） → 分類（build2 最終模型的訓練設定… | — |
 | `build_annotation_sample.py` | 人工標註樣本抽樣工具 | — |
 | `build_chip_features.py` | 整理籌碼資料並併入v2資料集： 1. 補抓交易日曆(期交所PCR日期)中還沒下載的三大法人/融資融券(主要是2021-04-06) 2. 解析 chip_raw/t86(股)、chip_raw/margin(張) -> chip_daily.csv（每檔每天一列） 3. 併入 final_dataset_v2/all_stocks_v2.csv -> final_dataset_v2/all_stocks_v2_chip.csv 三大法… | — |
 | `build_claude_label_sample.py` | 從全板2020-2024原始留言裡抽一批新樣本，供Claude本人標註 目的： 392筆人工標籤的訓練集太小，微調效果有限。這支程式從剛爬回來 的全板留言（ptt_stock_full_2020_2024/all_comments.csv）裡 抽一批全新、沒被標過的留言，讓Claude本人閱讀後直接標註情緒 （positive/negative/neutral），用來擴充微調訓練集。 | — |
@@ -276,7 +278,9 @@
 | `lowfreq_cm.py` | 把交易拉長：週頻、月頻選股，看 CMoney（與 PTT）情緒在「技術面＋散戶行為」之上有沒有增量。事先寫定見 PREREG_cmoney_full.md 第 D 節。 做法同 weekly_fullmarket_strategy.py / monthly_fullmarket_strategy.py；股票＝265 檔（CMoney 有資料）、期間 2020–2024、測試 2022–2024。 |
 | `lowfreq_fm_check.py` | 事後探索（看到 lowfreq_cm 單一變數 IC 後才追加）：CMoney 討論量／淨情緒對下期報酬的效果，控制規模、成交值、波動、動能後還在不在？ 每期橫斷面迴歸（變數先轉成橫斷面排名再標準化），Fama-MacBeth 平均係數與 t。 |
 | `lowfreq_net_sort.py` | 事後探索：依 CMoney 當期淨情緒分 5 組，看下期報酬（不用模型、不需訓練，所以 2020–2024 全期都能看；但規則是看到 IC 後才挑的，要標明）。 |
+| `oos_2025.py` | 2025 年真正樣本外：CMoney 淨情緒對下期報酬（事先寫定見 PREREG_cmoney_full.md 第 E 節）。 變數、分組、Fama-MacBeth 完全照 lowfreq_net_sort.py／lowfreq_fm_check.py；資料 final_dataset_v3_cm3x（2025＝build_2025.py）。 樣本外＝下期報酬落在 2025 年的期間：月頻形成月 2024-12 ~ 2025-11（12… |
 | `quarterly_vol.py` | 季頻高低波動選股 vs 大盤（不扣手續費）。事先寫定的假說見 PREREG_quarterly_vol.md。 每季底依過去 3 個月日報酬標準差分 5 組、等權、持有一季；和 0050 含息、^TWII、市值加權比。 cd D:/專題claude && python quarterly_vol/quarterly_vol.py |
+| `run_2025_chain.sh` | 2025 年 CMoney：收盤前抽樣爬蟲 → 熱門股開盤前補一頁。之後的分類與樣本外檢驗另外跑（build_2025.py、oos_2025.py）。 |
 | `run_cmoney_full.sh` | CMoney 完整資料：LSTM 5 組 × 5 seeds（GPU 1 條線＋CPU 8 個平行）→ 彙總。已完成的自動跳過，可重複執行。 實測：這個小 LSTM（batch 10）GPU 單一任務最快（每檔約 6 秒），但 GPU 上多開幾個不會變快；CPU 16 核可同時跑 8 個。 CM_TAG=cm3 → 讀補抓後的資料集、結果放 cmoney_full/lstm_cm3/ |
 | `run_preopen_chain.sh` | 補抓開盤前 → 分類＋重建 final_dataset_v3_cm3 → XGBoost 與洩漏檢查（cm3）。LSTM 不在這裡（使用者晚上說了再跑：CM_TAG=cm3 bash run_cmoney_full.sh）。 |
 | `xgb_direction_cm.py` | XGBoost 隔天開盤→收盤漲跌：CMoney 貼文情緒 vs PTT，同一批 265 檔、同一段 2020-2024。 設定同 retail_test_v4.py（features_v4.build 的技術面特徵與目標 B、XGB 超參數、依週 bootstrap），只改： 只用 2020 以後的資料（CMoney 只有這段）、測試年 2022-2024、多一組 +CMoney。事先寫定的假說見 cmoney_full/PREREG… |

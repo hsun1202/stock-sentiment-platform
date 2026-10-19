@@ -21,7 +21,9 @@ import numpy as np
 import pandas as pd
 import requests
 
-OUT = "cmoney_daily_pre"
+OUT = os.environ.get("PRE_OUT", "cmoney_daily_pre")          # 2025 年：PRE_SRC=cmoney_daily_2025 PRE_OUT=cmoney_daily_pre_2025 PRE_YEAR=2025
+SRC = os.environ.get("PRE_SRC", "cmoney_daily")
+PRE_YEAR = os.environ.get("PRE_YEAR")
 BASE = "https://www.cmoney.tw/api/mach/api/Article/Stocks"
 TOKEN_FILE = "cmoney_token.json"
 K = 1048.576
@@ -42,12 +44,16 @@ def log(msg):
 
 
 # ---------- 目標股票日 ----------
-cal = pd.read_csv("market_sentiment/taiex_official.csv", usecols=["Date"]).Date
-days = [d for d in cal if "2020-01-01" <= d <= "2024-12-31"]
+if PRE_YEAR:
+    cal = pd.Series(sorted(set(pd.read_csv("final_dataset_v3_tejall25/all_stocks_v3.csv", usecols=["Date"]).Date)))
+    days = [d for d in cal if f"{PRE_YEAR}-01-01" <= d <= f"{PRE_YEAR}-12-31"]
+else:
+    cal = pd.read_csv("market_sentiment/taiex_official.csv", usecols=["Date"]).Date
+    days = [d for d in cal if "2020-01-01" <= d <= "2024-12-31"]
 CLOSE = np.array([int(datetime.strptime(d + " 13:30", "%Y-%m-%d %H:%M").timestamp() * 1000) for d in days])
 OPEN = np.array([int(datetime.strptime(d + " 09:00", "%Y-%m-%d %H:%M").timestamp() * 1000) for d in days])
 targets = []
-for f in sorted(glob.glob("cmoney_daily/*.jsonl")):
+for f in sorted(glob.glob(f"{SRC}/*.jsonl")):
     code = os.path.basename(f)[:-6]
     t = np.array([json.loads(l)["t"] for l in open(f, encoding="utf-8")], dtype=np.int64)
     if len(t) == 0:

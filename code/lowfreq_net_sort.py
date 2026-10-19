@@ -6,7 +6,7 @@ src = open("cmoney_full/lowfreq_cm.py", encoding="utf-8").read().split("BASE = [
 exec(src)
 L = []
 def say2(s): print(s, flush=True); L.append(s)
-for freq, nm, py, unit in [("W-FRI", "週頻", 52, "週"), ("M", "月頻", 12, "月")]:
+for freq, nm, py, unit in [("W-FRI", "週頻", 52, "週"), ("M", "月頻", 12, "月"), ("Q", "季頻", 4, "季")]:
     P = panel(freq)
     U = P[P.ret_next.notna() & P.liq_ok].copy()
     bench = U.groupby("per").ret_next.mean()

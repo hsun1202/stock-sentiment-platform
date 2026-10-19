@@ -83,8 +83,10 @@ def panel(freq):
     C = P.Close
     if freq == "W-FRI":
         P["m1"], P["m2"], P["m3"], P["m4"] = C / lag(C, 1) - 1, C / lag(C, 4) - 1, C / lag(C, 12) - 1, lag(C, 4) / lag(C, 26) - 1
-    else:
+    elif freq == "M":
         P["m1"], P["m2"], P["m3"], P["m4"] = C / lag(C, 1) - 1, C / lag(C, 3) - 1, C / lag(C, 6) - 1, lag(C, 1) / lag(C, 12) - 1
+    else:                                       # 季頻：1、2、4 季動能、4 季−1 季
+        P["m1"], P["m2"], P["m3"], P["m4"] = C / lag(C, 1) - 1, C / lag(C, 2) - 1, C / lag(C, 4) - 1, lag(C, 1) / lag(C, 4) - 1
     P["logdv"], P["voltrend"] = np.log(P.dv20), np.log(P.v5 / P.v60)
     P["ma60r"], P["rsi"], P["hi52"] = C / P.MA60 - 1, P.RSI14, C / P.hi250 - 1
     P["smr"] = P.short_margin_ratio.clip(0, 1)
@@ -163,7 +165,7 @@ def run(freq, label, per_year, use_buffer):
 
     a, sh, dd = perf(bench)
     say(f"  基準 等權：年化 {a:+.1%}、Sharpe {sh:.2f}、回落 {dd:.1%}｜市值加權：年化 {perf(vw)[0]:+.1%}、Sharpe {perf(vw)[1]:.2f}")
-    unit = "週" if freq == "W-FRI" else "月"
+    unit = {"W-FRI": "週", "M": "月", "Q": "季"}[freq]
     res = {}
     for arm in ARMS:
         U["s"] = pred[arm][U.index]
@@ -194,8 +196,11 @@ def run(freq, label, per_year, use_buffer):
 
 w = run("W-FRI", "週頻（每週五收盤換股）", 52, True)
 m = run("M", "月頻（每月底換股）", 12, False)
+q = run("Q", "季頻（每季底換股；測試只有 12 季，只報數字）", 4, False)
 d = w["+CMoney"]
 say(f"\n→ L1（週頻 +CMoney 扣成本後 − 基準 > 0）：{d.mean():+.3%}/週，t={tstat(d):+.2f} → {'通過' if d.mean() > 0 and tstat(d) > 1.96 else '未通過'}")
 d = m["+CMoney"]
 say(f"→ L2（月頻 +CMoney 扣成本後 − 基準 > 0）：{d.mean():+.3%}/月，t={tstat(d):+.2f} → {'通過' if d.mean() > 0 and tstat(d) > 1.96 else '未通過'}")
+d = q["+CMoney"]
+say(f"（季頻，只報數字）+CMoney 扣成本後 − 基準：{d.mean():+.3%}/季，t={tstat(d):+.2f}，{len(d)} 期")
 open(f"cmoney_full/lowfreq_cm_{CM_TAG}.log", "w", encoding="utf-8").write("\n".join(LOG) + "\n")
