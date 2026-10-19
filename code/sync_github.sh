@@ -21,7 +21,10 @@ for f in "$SRC"/*.json; do
   case "$b" in *token*) continue ;; esac
   cp -u "$f" "$DST/results/"
 done
-# 季頻高低波動（子資料夾；不傳抓下來的價格 csv）
+# 子資料夾：季頻高低波動、CMoney 完整資料（不傳抓下來的價格 csv）
+mkdir -p "$DST/results/cmoney_full"
+cp -u "$SRC"/cmoney_full/*.py "$SRC"/cmoney_full/*.sh "$DST/code/" 2>/dev/null || true
+cp -u "$SRC"/cmoney_full/*.log "$SRC"/cmoney_full/*.md "$SRC"/cmoney_full/*.json "$DST/results/cmoney_full/" 2>/dev/null || true
 mkdir -p "$DST/results/quarterly_vol"
 cp -u "$SRC"/quarterly_vol/*.py "$DST/code/" 2>/dev/null || true
 cp -u "$SRC"/quarterly_vol/*.log "$SRC"/quarterly_vol/*.png "$SRC"/quarterly_vol/*.md "$SRC"/quarterly_vol/quarterly_vol_returns.csv "$DST/results/quarterly_vol/" 2>/dev/null || true

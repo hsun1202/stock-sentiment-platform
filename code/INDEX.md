@@ -169,6 +169,7 @@
 | `logreg_direction_v4.py` | 邏輯迴歸版（最簡單的基準）：與 retail_test_v4.py（XGBoost）完全相同的特徵、目標（隔天開盤→收盤漲跌）、 逐年滾動（測試年 2018~2024）、週 block bootstrap，只把模型換成邏輯迴歸，方便與 XGBoost、LSTM 並排比較。 前處理：inf→缺值，訓練集中位數補值，標準化後截尾到 ±5； 超參數：L2 懲罰強度 C 用驗證期（前一年下半年）AUC 在 {0.001, 0.01, 0.1, … | `logreg_direction_v4.log`、`logreg_direction_v4_results.json` |
 | `longshort_sentiment_test.py` | 橫截面多空組合檢驗（Baker & Wurgler式investor sentiment標準檢定法）： 不問「這檔股票會不會漲」，而是問「情緒偏多的股票，隔天表現有沒有比情緒偏空的股票好」。 每天把當天有討論的股票依情緒因子分成「偏多組」(>0)和「偏空組」(<0)，算兩組隔日 報酬的價差(long-short spread)，累積成時間序列後做t檢定。這個設計會自動抵銷當天 大盤整體漲跌(跟直接比較兩組的相對表現，不是各自的絕對方向)… | — |
 | `lstm_direction_v4.py` | LSTM 正式版：十年資料（2015-2024）逐年滾動，預測個股「隔天開盤→收盤」漲跌（可交易）， 比較 技術面 / +PTT / +籌碼 / +PTT+籌碼，並與 XGBoost 版（direction_test_v4.py）對照。 為什麼不照原論文預測股價/看MAPE：舊版 LSTM（per-stock 價格迴歸）的 MAPE 被「價格水準外推誤差」主導 （直接用昨天收盤價 MAPE 1.34%，LSTM 11.5%），偵測不到情… | `lstm_direction_v4.log`、`lstm_direction_v4_3seeds.log`、`lstm_direction_v4_results.json`、`lstm_direction_v4_results_3seeds.json` |
+| `lstm_price_cm.py` | 照論文（Jing, Wu & Wang 2021）：每檔各自訓練 LSTM 預測隔天收盤價、看 MAPE —— 換成 CMoney 貼文情緒，並與 PTT 在同一段期間比較。 設定、模型、切法全部沿用 lstm_price_v4.py（直接 import），只改：資料裁成 2020-2024（CMoney 只有這段）、多一組 +CMoney。 事先寫定的假說見 cmoney_full/PREREG_cmoney_full.md。 | — |
 | `lstm_price_v4.py` | 原論文作法（Jing, Wu & Wang 2021）用十年資料重跑：每檔股票各自訓練一個 LSTM，預測「隔天收盤價」，看 MAPE 與舊版 train_lstm_per_stock.py 相同：per-stock、窗口10天、依時間切 train 75% / val 10% / test 15%、 論文 Table 6 超參數（5層、20 hidden、lr 0.01、batch 10、最多100 epochs、early stop… | — |
 | `margin_return_test.py` | 融資融券能不能「預測報酬」（不只漲跌方向）—— 日頻，隔天開盤→收盤報酬（＝當沖型交易），2018~2024 (a) 單一變數排序：每天依 融資增減 / 融券增減 / 券資比 把股票分五組，看隔天開盤→收盤平均報酬（等權） (b) 模型排序：用 daytrade_test.py 存好的 XGBoost 預測（技術面 vs +融資融券），每天取預測前20%/後20%，看報酬差 報酬為毛報酬（未扣成本）；台股當沖來回成本約 0.32%（六折… | `margin_return_test.log` |
 | `market_ptt_2025_test.py` | 市場層級 PTT 情緒的 2025 年「真正樣本外」檢驗（事先寫定的假說，來自 2020-2024 的發現） H1：情緒上升日（dS＝今天淨情緒 − 前20日平均 > 0）的隔天，加權指數收盤→收盤報酬高於其他日子 （2015-2024 全期差 +8.5 bp，t=2.0；2015-2019 −6.0；2020-2024 +22.7 bp，t=3.4） H2：規則「dS>0 做多、<0 做空」／「dS>0 才做多」在 2025 年優於買… | `market_ptt_2025_test.log` |
@@ -193,6 +194,7 @@
 | `spike_direction_test.py` | 異常情緒/討論量偵測：不是每天都看情緒因子，只在「討論量相對該股近20日均值 出現異常尖峰」的日子才納入情緒特徵，其餘日子視為沒有訊號。邏輯：多數日子的 留言是雜訊，只有聲量異常放大時才可能反映真正的重大消息或群眾情緒轉向。 | `spike_direction_test.log`、`spike_direction_test_results.json` |
 | `split5_test.py` | 「訓練 5 年、預測 5 年」：2015-2019 訓練一次（2019 下半年當驗證/early stopping），模型固定，直接預測 2020-2024 與逐年滾動（每年重訓，retail_test_v4 / return_regression_test）對照。 方向：隔天開盤→收盤漲跌，XGBoost（3 seeds）與邏輯迴歸，AUC 與「加某訊號 − 只有技術面」ΔAUC（週 bootstrap） 報酬：隔天開盤→收盤報酬，X… | `split5_test.log` |
 | `stock_ptt_2025_test.py` | 只用 PTT 個股情緒：2025 年「真正樣本外」檢驗（事先寫定的假說，來自 2015-2024） H（主要）：淨情緒（今天收盤前留言）→ 隔天「隔夜」超額報酬的係數 > 0 2015-2024：控制今天/漲跌停/留言量 +4.6 bp（t=3.8）；再加過去5/20天報酬 +2.7~2.8 bp（t≈2.3） 另外報告：隔天收盤→收盤、隔天盤中；規則「情緒>0買、<0賣」毛/淨報酬；強正/強負事件後 1/5/20 天累積超額 兩期用完… | `stock_ptt_2025_test.log` |
+| `summarize_cm.py` | 彙總 cmoney_full/lstm/ 的 per-stock LSTM 結果（每檔先對 seeds 平均，再跨股票做配對 t），寫 cmoney_full/lstm_summary.log | — |
 | `summarize_lstm_price_v4.py` | 彙總 run_lstm_price_v4.sh：各組 MAPE / 方向準確率（10 seeds），與「技術面」配對比較（同種子相減），並列天真預測。 | `summarize_lstm_price_v4.log` |
 | `summarize_seeds.py` | 彙整多組種子的「含情緒 vs 不含情緒」LSTM整體MAPE，算平均差異、95%信賴區間、配對t檢定、Wilcoxon。 | — |
 | `taiex_direction_test.py` | 把256檔PTT情緒合併成「全市場」每日情緒(每天中位數708則留言，遠比單一個股密集)， 測試能不能預測大盤(TAIEX/^TWII)隔日漲跌，而不是個股——模仿Chen & Hsu(2025)用 大盤而非個股當預測目標的做法，用跟direction_test.py同一套嚴謹方法(XGBoost、多seed、 按週block bootstrap)驗證換題目後情緒因子是否還是測不出效果。 | `taiex_direction_test.log`、`taiex_direction_test_results.json` |
@@ -270,3 +272,6 @@
 | 程式 | 用途 |
 |---|---|
 | `quarterly_vol.py` | 季頻高低波動選股 vs 大盤（不扣手續費）。事先寫定的假說見 PREREG_quarterly_vol.md。 每季底依過去 3 個月日報酬標準差分 5 組、等權、持有一季；和 0050 含息、^TWII、市值加權比。 cd D:/專題claude && python quarterly_vol/quarterly_vol.py |
+| `run_cmoney_full.sh` | CMoney 完整資料：XGBoost（已跑完則跳過）→ LSTM 5 組 × 5 seeds（CPU、8 個平行、每個 2 執行緒）→ 彙總。已完成的自動跳過，可重複執行。 實測：這個小 LSTM（batch 10）在 GPU 上平行沒有加速，CPU 每檔約 6–7 秒，16 核可同時跑 8 個。 |
+| `xgb_direction_cm.py` | XGBoost 隔天開盤→收盤漲跌：CMoney 貼文情緒 vs PTT，同一批 265 檔、同一段 2020-2024。 設定同 retail_test_v4.py（features_v4.build 的技術面特徵與目標 B、XGB 超參數、依週 bootstrap），只改： 只用 2020 以後的資料（CMoney 只有這段）、測試年 2022-2024、多一組 +CMoney。事先寫定的假說見 cmoney_full/PREREG… |
+| `xgb_leak_check.py` | 檢查 xgb_direction_cm.py 的 +CMoney 是否來自抽樣洩漏（事後追加的檢查，2026-10-19，看到 X1 通過後才寫——要如實標註）。 疑慮：CMoney 爬蟲每個交易日只抓「收盤前最後 20 篇」。t+1 開盤前的貼文有沒有被抓到，取決於 t+1 盤中貼文多不多（盤中熱 → 開盤前的被擠掉）， 而 t+1 盤中熱不熱鬧跟 t+1 漲跌有關 → 「t+1 開盤前」特徵偷看到了 t+1 的資訊。PTT 是全量抓… |
