@@ -23,7 +23,6 @@ for f in "$SRC"/*.json; do
 done
 # 子資料夾：季頻高低波動、CMoney 完整資料（不傳抓下來的價格 csv）
 mkdir -p "$DST/results/cmoney_full"
-cp -u "$SRC"/cmoney_full/*.csv "$DST/results/cmoney_full/" 2>/dev/null || true
 cp -u "$SRC"/cmoney_full/*.py "$SRC"/cmoney_full/*.sh "$DST/code/" 2>/dev/null || true
 cp -u "$SRC"/cmoney_full/*.log "$SRC"/cmoney_full/*.md "$SRC"/cmoney_full/*.json "$DST/results/cmoney_full/" 2>/dev/null || true
 mkdir -p "$DST/results/quarterly_vol"
