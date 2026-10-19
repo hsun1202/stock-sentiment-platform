@@ -20,6 +20,8 @@ sys.path.insert(0, os.getcwd())
 from features_v4 import build  # noqa: E402
 
 SEEDS, BOOT, TEST_YEARS = 5, 300, [2022, 2023, 2024]
+CM_TAG = os.environ.get("CM_TAG", "cm2")          # cm2＝原本；cm3＝補抓開盤前後（rebuild_cm3.py）
+SFX = "" if CM_TAG == "cm2" else "_" + CM_TAG
 feat, meta, A = build()
 TECH = A["技術面"]
 L = []
@@ -53,7 +55,7 @@ def add(path, tag):
 
 
 P_ = add("final_dataset_v3/all_stocks_v3.csv", "ptt")
-C_ = add("final_dataset_v3_cm2/all_stocks_v3.csv", "cm")
+C_ = add(f"final_dataset_v3_{CM_TAG}/all_stocks_v3.csv", "cm")
 ARMS = {"技術面": TECH,
         "+CMoney 只用t收盤前（乾淨）": TECH + C_["close"], "+CMoney 只用t+1開盤前（疑慮）": TECH + C_["nextpre"],
         "+CMoney 合併（原版）": TECH + C_["close"] + C_["nextpre"],
@@ -90,4 +92,4 @@ for arm in list(ARMS)[1:]:
     bd = [roc_auc_score(yy[b], D[arm].values[b]) - roc_auc_score(yy[b], D["技術面"].values[b]) for b in boots]
     lo, hi = np.percentile(bd, [2.5, 97.5])
     say(f"  {arm:24s} {d:+.4f} [{lo:+.4f}, {hi:+.4f}]")
-open("cmoney_full/xgb_leak_check.log", "w", encoding="utf-8").write("\n".join(L) + "\n")
+open(f"cmoney_full/xgb_leak_check{SFX}.log", "w", encoding="utf-8").write("\n".join(L) + "\n")

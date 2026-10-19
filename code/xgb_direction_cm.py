@@ -19,8 +19,10 @@ from features_v4 import build  # noqa: E402
 
 SEEDS, BOOT, TEST_YEARS = 5, 300, [2022, 2023, 2024]
 OUT = "cmoney_full/"
+CM_TAG = os.environ.get("CM_TAG", "cm2")          # cm2＝原本；cm3＝補抓開盤前後（rebuild_cm3.py）
+SFX = "" if CM_TAG == "cm2" else "_" + CM_TAG
 feat, meta, A = build()
-feat_c, meta_c, _ = build("final_dataset_v3_cm2/all_stocks_v3.csv")
+feat_c, meta_c, _ = build(f"final_dataset_v3_{CM_TAG}/all_stocks_v3.csv")
 assert (meta.stock_code.values == meta_c.stock_code.values).all() and (meta.date.values == meta_c.date.values).all()
 TECH = A["技術面"]
 PTT = [c for c in A["+PTT(開盤前可得)"] if c not in TECH]
@@ -29,7 +31,7 @@ feat[CM] = feat_c[PTT].values
 ARMS = {"技術面": TECH, "+PTT": TECH + PTT, "+CMoney": TECH + CM, "+PTT+CMoney": TECH + PTT + CM}
 keep, y, date, end = meta["valid"] & (meta.date >= "2020-01-01"), meta["y"], meta["date"], meta["end_date"]
 lines, res, allp = [], {}, []
-lines.append(f"情緒特徵：PTT {PTT}；CMoney {CM}｜樣本 {int(keep.sum()):,} 股票日、{meta.stock_code[keep].nunique()} 檔")
+lines.append(f"資料集 {CM_TAG}｜情緒特徵：PTT {PTT}；CMoney {CM}｜樣本 {int(keep.sum()):,} 股票日、{meta.stock_code[keep].nunique()} 檔")
 for Y in TEST_YEARS:
     tr = keep & (end <= f"{Y-1}-06-30")
     va = keep & (date >= f"{Y-1}-07-01") & (end <= f"{Y-1}-12-31")
@@ -81,6 +83,6 @@ for arm in list(ARMS)[1:]:
 p = res["pooled_+CMoney"]
 lines.append(f"→ X1（+CMoney ΔAUC > 0，區間不含 0）：{p['d']:+.4f} [{p['lo']:+.4f}, {p['hi']:+.4f}] → {'通過' if p['lo'] > 0 else '未通過'}")
 print("\n".join(lines[-7:]))
-open(OUT + "xgb_direction_cm.log", "w", encoding="utf-8").write("\n".join(lines) + "\n")
-json.dump({str(k): v for k, v in res.items()}, open(OUT + "xgb_direction_cm_results.json", "w", encoding="utf-8"),
+open(OUT + f"xgb_direction_cm{SFX}.log", "w", encoding="utf-8").write("\n".join(lines) + "\n")
+json.dump({str(k): v for k, v in res.items()}, open(OUT + f"xgb_direction_cm{SFX}_results.json", "w", encoding="utf-8"),
           ensure_ascii=False, indent=2, default=float)

@@ -16,6 +16,7 @@
 | `crawl_cmoney.py` | CMoney股市爆料同學會爬蟲（需要登入token，抓267檔股票2024年的討論） | — |
 | `crawl_cmoney_comments.py` | 補抓CMoney文章底下的留言（crawl_cmoney.py只抓了文章本身，沒抓留言內容） | — |
 | `crawl_cmoney_daily.py` | CMoney 同學會「每個交易日收盤前」抽樣爬蟲（2020-01-01 ~ 2024-12-31，資料集內全部股票） 作法：每檔股票從 2024 年底往回走。目前位置 T（時間）： 抓「T 之前最新的一頁（20 篇）」→ 若這頁最舊的文章還沒碰到上一個交易日收盤，就直接跳到上一個交易日收盤（熱門股：每天一頁）； 否則從這頁最舊的文章接著往回翻（冷門股：連續翻頁，不漏文章）。 cursor ＝ 毫秒時間 × 1048.576（2026-0… | — |
+| `crawl_cmoney_preopen.py` | CMoney 補抓：熱門股「開盤前被擠掉」的股票日，各補抓一頁 ——「當天 09:00 之前最新的 20 篇」。 原爬蟲（crawl_cmoney_daily.py）熱門股每天只抓收盤前最後 20 篇，盤中熱的日子開盤前貼文全被擠掉， 造成「t+1 開盤前」特徵偷看到 t+1 盤中熱度（見 cmoney_full/xgb_leak_check.log）。補抓後每個股票日開盤前都至少有最新的一頁。 目標：抓到 ≥20 篇、且最舊一篇已在當… | — |
 | `crawl_cnyes_news.py` | 抓鉅亨網「台股」分類新聞（媒體新聞；補公開資訊觀測站重大訊息沒有的記者報導、法人觀點） 介面：GET https://api.cnyes.com/media/api/v1/newslist/category/tw_stock?startAt=<unix>&endAt=<unix>&limit=30&page=N 實測可回溯到 2015 年；每頁最多 30 則；時間區間太長會被截斷 → 以 3 天為一個視窗逐頁抓（超過 30 頁再切成單日… | — |
 | `crawl_mops_material.py` | 抓公開資訊觀測站「重大訊息」（歷史，逐公司逐年；只抓主旨，不抓全文） 介面：POST https://mops.twse.com.tw/mops/api/t05st01  {"companyId","year"(民國),"month":"all","firstDay":"","lastDay":"","dataType":"1"} 回傳每則：公司代號、名稱、發言日期(民國)、發言時間(時:分:秒)、主旨 輸出：mops_material… | — |
 | `crawl_ptt_stock_full.py` | PTT Stock板全板爬蟲（不篩股票，含使用者ID，2020-2024） | — |
@@ -74,6 +75,7 @@
 | `merge_finetune_labels.py` | 合併「392筆人工標籤」+「300筆Claude標籤」，供微調用 兩種標籤來源準確度不完全相同（人工是黃金標準；Claude標籤先前的 Kappa分析顯示跟人工只有中等一致性），所以保留source欄位，之後 如果想只用人工標籤驗證、或分析Claude標籤有沒有拖累微調效果， 都能回頭用source欄位切分。 | — |
 | `prepare_lstm_dataset.py` | LSTM訓練資料準備（技術指標 + 情緒因子 -> 下一日收盤價） | — |
 | `quality_check.py` | 批次資料品質自動檢查工具 | — |
+| `rebuild_cm3.py` | 把補抓的開盤前貼文（cmoney_daily_pre/）併進 CMoney 資料 → final_dataset_v3_cm3/（cm2 不動，舊結果可重現）。 流程同 cmoney_daily_build.py / cmoney_daily_build2.py：去重（與原本已抓的比對）→ 廣告/空白 → 清理 flag（與舊資料合併計算， 舊文章維持原本的保留與否）→ 分類（同 build2 的最終模型：PTT 金標＋CMoney 金… | — |
 | `rebuild_comments.py` | 留言資料重建工具 | — |
 | `stitch_truncated_comments.py` | 嘗試把PTT因為單行字數上限被截斷的留言，跟後面緊接著的留言接回去。 | — |
 | `stitch_truncated_comments_v2.py` | 用「使用者ID」重做斷句留言合併（v2，取代舊版stitch_truncated_comments.py） | — |
@@ -272,6 +274,7 @@
 | 程式 | 用途 |
 |---|---|
 | `quarterly_vol.py` | 季頻高低波動選股 vs 大盤（不扣手續費）。事先寫定的假說見 PREREG_quarterly_vol.md。 每季底依過去 3 個月日報酬標準差分 5 組、等權、持有一季；和 0050 含息、^TWII、市值加權比。 cd D:/專題claude && python quarterly_vol/quarterly_vol.py |
-| `run_cmoney_full.sh` | CMoney 完整資料：XGBoost（已跑完則跳過）→ LSTM 5 組 × 5 seeds（GPU 1 條線＋CPU 8 個平行）→ 彙總。已完成的自動跳過，可重複執行。 實測：這個小 LSTM（batch 10）GPU 單一任務最快（每檔約 6 秒），但 GPU 上多開幾個不會變快；CPU 16 核可同時跑 8 個。 |
+| `run_cmoney_full.sh` | CMoney 完整資料：LSTM 5 組 × 5 seeds（GPU 1 條線＋CPU 8 個平行）→ 彙總。已完成的自動跳過，可重複執行。 實測：這個小 LSTM（batch 10）GPU 單一任務最快（每檔約 6 秒），但 GPU 上多開幾個不會變快；CPU 16 核可同時跑 8 個。 CM_TAG=cm3 → 讀補抓後的資料集、結果放 cmoney_full/lstm_cm3/ |
+| `run_preopen_chain.sh` | 補抓開盤前 → 分類＋重建 final_dataset_v3_cm3 → XGBoost 與洩漏檢查（cm3）。LSTM 不在這裡（使用者晚上說了再跑：CM_TAG=cm3 bash run_cmoney_full.sh）。 |
 | `xgb_direction_cm.py` | XGBoost 隔天開盤→收盤漲跌：CMoney 貼文情緒 vs PTT，同一批 265 檔、同一段 2020-2024。 設定同 retail_test_v4.py（features_v4.build 的技術面特徵與目標 B、XGB 超參數、依週 bootstrap），只改： 只用 2020 以後的資料（CMoney 只有這段）、測試年 2022-2024、多一組 +CMoney。事先寫定的假說見 cmoney_full/PREREG… |
 | `xgb_leak_check.py` | 檢查 xgb_direction_cm.py 的 +CMoney 是否來自抽樣洩漏（事後追加的檢查，2026-10-19，看到 X1 通過後才寫——要如實標註）。 疑慮：CMoney 爬蟲每個交易日只抓「收盤前最後 20 篇」。t+1 開盤前的貼文有沒有被抓到，取決於 t+1 盤中貼文多不多（盤中熱 → 開盤前的被擠掉）， 而 t+1 盤中熱不熱鬧跟 t+1 漲跌有關 → 「t+1 開盤前」特徵偷看到了 t+1 的資訊。PTT 是全量抓… |

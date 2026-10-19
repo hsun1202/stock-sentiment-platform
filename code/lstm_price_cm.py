@@ -26,7 +26,7 @@ START = "2020-01-01"
 
 def load_both():
     df = L.load()
-    cm = L.load("final_dataset_v3_cm2/all_stocks_v3.csv")
+    cm = L.load(f"final_dataset_v3_{os.environ.get('CM_TAG', 'cm2')}/all_stocks_v3.csv")
     assert (df.stock_code.values == cm.stock_code.values).all() and (df.Date.values == cm.Date.values).all()
     df["cm_fac"], df["cm_att"] = cm.ptt_fac.values, cm.ptt_att.values
     n = cm.ptt_pre_n + cm.ptt_intra_n

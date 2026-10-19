@@ -7,8 +7,9 @@ import numpy as np
 import pandas as pd
 from scipy import stats
 
+D = os.environ.get("LSTM_DIR", "cmoney_full/lstm")
 rows = []
-for f in glob.glob("cmoney_full/lstm/*_seed*/per_stock.csv"):
+for f in glob.glob(f"{D}/*_seed*/per_stock.csv"):
     arm, seed = os.path.basename(os.path.dirname(f)).rsplit("_seed", 1)
     rows.append(pd.read_csv(f, dtype={"stock_code": str}).assign(arm=arm, seed=int(seed)))
 R = pd.concat(rows)
@@ -30,4 +31,4 @@ d = (W["mape"]["+CMoney"] - W["mape"]["技術面"]).dropna()
 t, p = stats.ttest_1samp(d, 0)
 out.append(f"→ L1（+CMoney MAPE 低於技術面，p<0.05）：{d.mean()*100:+.2f}pp, p={p:.3f} → {'通過' if d.mean() < 0 and p < 0.05 else '未通過'}")
 print("\n".join(out))
-open("cmoney_full/lstm_summary.log", "w", encoding="utf-8").write("\n".join(out) + "\n")
+open(f"{D}_summary.log", "w", encoding="utf-8").write("\n".join(out) + "\n")
