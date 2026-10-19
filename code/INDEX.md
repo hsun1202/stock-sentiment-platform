@@ -273,6 +273,9 @@
 
 | 程式 | 用途 |
 |---|---|
+| `lowfreq_cm.py` | 把交易拉長：週頻、月頻選股，看 CMoney（與 PTT）情緒在「技術面＋散戶行為」之上有沒有增量。事先寫定見 PREREG_cmoney_full.md 第 D 節。 做法同 weekly_fullmarket_strategy.py / monthly_fullmarket_strategy.py；股票＝265 檔（CMoney 有資料）、期間 2020–2024、測試 2022–2024。 |
+| `lowfreq_fm_check.py` | 事後探索（看到 lowfreq_cm 單一變數 IC 後才追加）：CMoney 討論量／淨情緒對下期報酬的效果，控制規模、成交值、波動、動能後還在不在？ 每期橫斷面迴歸（變數先轉成橫斷面排名再標準化），Fama-MacBeth 平均係數與 t。 |
+| `lowfreq_net_sort.py` | 事後探索：依 CMoney 當期淨情緒分 5 組，看下期報酬（不用模型、不需訓練，所以 2020–2024 全期都能看；但規則是看到 IC 後才挑的，要標明）。 |
 | `quarterly_vol.py` | 季頻高低波動選股 vs 大盤（不扣手續費）。事先寫定的假說見 PREREG_quarterly_vol.md。 每季底依過去 3 個月日報酬標準差分 5 組、等權、持有一季；和 0050 含息、^TWII、市值加權比。 cd D:/專題claude && python quarterly_vol/quarterly_vol.py |
 | `run_cmoney_full.sh` | CMoney 完整資料：LSTM 5 組 × 5 seeds（GPU 1 條線＋CPU 8 個平行）→ 彙總。已完成的自動跳過，可重複執行。 實測：這個小 LSTM（batch 10）GPU 單一任務最快（每檔約 6 秒），但 GPU 上多開幾個不會變快；CPU 16 核可同時跑 8 個。 CM_TAG=cm3 → 讀補抓後的資料集、結果放 cmoney_full/lstm_cm3/ |
 | `run_preopen_chain.sh` | 補抓開盤前 → 分類＋重建 final_dataset_v3_cm3 → XGBoost 與洩漏檢查（cm3）。LSTM 不在這裡（使用者晚上說了再跑：CM_TAG=cm3 bash run_cmoney_full.sh）。 |
