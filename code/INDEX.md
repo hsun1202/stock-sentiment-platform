@@ -272,6 +272,6 @@
 | 程式 | 用途 |
 |---|---|
 | `quarterly_vol.py` | 季頻高低波動選股 vs 大盤（不扣手續費）。事先寫定的假說見 PREREG_quarterly_vol.md。 每季底依過去 3 個月日報酬標準差分 5 組、等權、持有一季；和 0050 含息、^TWII、市值加權比。 cd D:/專題claude && python quarterly_vol/quarterly_vol.py |
-| `run_cmoney_full.sh` | CMoney 完整資料：XGBoost（已跑完則跳過）→ LSTM 5 組 × 5 seeds（CPU、8 個平行、每個 2 執行緒）→ 彙總。已完成的自動跳過，可重複執行。 實測：這個小 LSTM（batch 10）在 GPU 上平行沒有加速，CPU 每檔約 6–7 秒，16 核可同時跑 8 個。 |
+| `run_cmoney_full.sh` | CMoney 完整資料：XGBoost（已跑完則跳過）→ LSTM 5 組 × 5 seeds（GPU 1 條線＋CPU 8 個平行）→ 彙總。已完成的自動跳過，可重複執行。 實測：這個小 LSTM（batch 10）GPU 單一任務最快（每檔約 6 秒），但 GPU 上多開幾個不會變快；CPU 16 核可同時跑 8 個。 |
 | `xgb_direction_cm.py` | XGBoost 隔天開盤→收盤漲跌：CMoney 貼文情緒 vs PTT，同一批 265 檔、同一段 2020-2024。 設定同 retail_test_v4.py（features_v4.build 的技術面特徵與目標 B、XGB 超參數、依週 bootstrap），只改： 只用 2020 以後的資料（CMoney 只有這段）、測試年 2022-2024、多一組 +CMoney。事先寫定的假說見 cmoney_full/PREREG… |
 | `xgb_leak_check.py` | 檢查 xgb_direction_cm.py 的 +CMoney 是否來自抽樣洩漏（事後追加的檢查，2026-10-19，看到 X1 通過後才寫——要如實標註）。 疑慮：CMoney 爬蟲每個交易日只抓「收盤前最後 20 篇」。t+1 開盤前的貼文有沒有被抓到，取決於 t+1 盤中貼文多不多（盤中熱 → 開盤前的被擠掉）， 而 t+1 盤中熱不熱鬧跟 t+1 漲跌有關 → 「t+1 開盤前」特徵偷看到了 t+1 的資訊。PTT 是全量抓… |

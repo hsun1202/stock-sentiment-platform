@@ -16,7 +16,8 @@
 1. **CMoney 完整資料（2026-10-19，使用者同意）** `cmoney_full/`；假說先寫在 `PREREG_cmoney_full.md`。265 檔、2020–2024（PTT 也裁成同段才公平）。
    - **XGBoost 漲跌方向（已完成，`xgb_direction_cm.log`）：事先寫定的 X1 通過**——+CMoney 相對技術面 ΔAUC **+0.0031 [+0.0021, +0.0043]**，2022/23/24 為 +0.0015/+0.0035/+0.0046（逐年變大、3/3 為正）；+PTT −0.0000 [−0.0003, +0.0003]。技術面 AUC 0.546。**這是整個專題第一個在 AUC 上測得到增量的情緒來源**，和 CMoney 迴歸（t≈4–5）一致。
    - **洩漏檢查（看到結果後才追加，要如實說，`xgb_leak_check.py`／`.log`）**：CMoney 爬蟲每天只抓「收盤前最後 20 篇」，所以「t+1 開盤前」被抓到多少取決於 t+1 盤中熱不熱（熱門股 corr(t+1 開盤前則數, t+1 盤中則數) = **−0.30**，被擠掉；PTT 全量 +0.58）→ 原版特徵含偷看。**只用 t 收盤前的乾淨版仍有 +0.0028 [+0.0019, +0.0040]**；只用 t+1 開盤前 +0.0020；PTT 收盤前 +0.0001。→ 結論站得住，但報告要用乾淨版的數字。經濟意義仍小（迴歸只有 1–3 bp，成本 47–59 bp）。
-   - **LSTM-MAPE（照論文）：排程 `PTT_cmoney_full` 在 2026-10-20 00:30 執行**（使用者說很久就半夜跑；白天試跑太慢已停）。5 組（技術面／+PTT／+CMoney／+PTT+CMoney／**+CMoney收盤前**＝乾淨版）× 5 seeds，CPU 8 個平行（GPU 平行沒加速），估 2–3 小時。進度 `cmoney_full/_run.log`，出現 SUMMARY_DONE 即完成；結果 `cmoney_full/lstm_summary.log`。可重複執行（已完成的自動跳過）。**跑完要刪排程**：`Unregister-ScheduledTask PTT_cmoney_full -Confirm:$false`。
+   - **LSTM-MAPE（照論文）：程式已備妥、尚未執行——使用者說「等晚上我叫你跑再跑」，不要自己啟動**（白天試跑太慢已停；排程已刪）。5 組（技術面／+PTT／+CMoney／+PTT+CMoney／**+CMoney收盤前**＝乾淨版）× 5 seeds；GPU 一條線跑 seed 4 的 5 組＋CPU 8 個平行跑 seed 0–3（依 seed 分硬體，同 seed 各組同硬體；實測 GPU 單任務 0.16 檔/秒、GPU 多開不會變快、CPU 8 平行 0.64 檔/秒），估約 2.3 小時。
+     - 使用者叫跑時：用工作排程器跑 `wscript "D:\專題claude\cmoney_full\run_hidden.vbs"`（→ `run_cmoney_full.sh`，XGBoost 已有結果會跳過），註冊成 `PTT_cmoney_full` 並立即 Start；啟動後確認 python 在跑。進度 `cmoney_full/_run.log`，出現 SUMMARY_DONE 即完成；結果 `cmoney_full/lstm_summary.log`。可重複執行。跑完刪排程。
 2. 平台網頁（三模組：情緒指數、技術面＋籌碼看板、事件提示）——建議下一步，使用者尚未點頭。
 3. 重匯 2014–2025 含注意／處置旗標的 TEJ 股價 → 驗 V-A、V-D。
 4. 與組員對齊：沒消息大漲是否剔除漲停；兩邊結果合併成一份報告。
