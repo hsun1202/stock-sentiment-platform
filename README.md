@@ -98,7 +98,7 @@ python code/xgb_direction_cm.py && python code/oos_2025.py   # 研究八：漲�
 python quarterly_vol/quarterly_vol.py                 # 研究九：季頻高低波動
 
 # 5. 簡報
-cd slides && npm install && node build_deck_v19.js
+cd slides && npm install && node build_deck_v20.js
 ```
 
 環境：Python 3.10；部分模型用 NVIDIA GPU（XGBoost `device="cuda"`、BERT、Breeze）；簡報用 Node.js＋pptxgenjs。

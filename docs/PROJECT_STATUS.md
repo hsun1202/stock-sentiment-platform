@@ -1,14 +1,21 @@
-# ▶▶ 新對話先看這段（2026-10-15 深夜交接；context 快滿，使用者要求先整理）
+# ▶▶ 新對話先看這段（2026-10-20 中午更新）
+
+**2026-10-19～20 做了什麼（細節在下面「待使用者決定」第 1 項與 `docs`）**
+- CMoney 完整檢驗全部做完（補抓開盤前修正抽樣洩漏、XGBoost、當沖回測、週／月／季選股、2025 樣本外、7 種情緒選股策略、LSTM）。一句話：**CMoney 比 PTT 有用一點（AUC +0.003；悲觀的股票下月較差、2025 方向重現但證據不足），但賺不到錢、沒贏大盤；照論文的 LSTM 一樣無效**。
+- 季頻高低波動（組員 davis 的對照，10-15）：不扣成本也沒贏 0050 含息。
+- **GitHub 手寫文件已更新（10-20 12:37，使用者要求「寫詳細一點給組員參考」）**：新增 `docs/09_cmoney.md`（CMoney 完整研究：怎麼抓、token、洩漏的坑、每個檢驗的作法與數字、檔案對照、重跑順序）、`docs/10_quarterly_volatility.md`（季頻高低波動＋要問組員的 6 個問題＋等權 vs 市值加權）；README（結論表加研究八、九、資料表、限制、執行指令、英文版）、`docs/01_replication.md`（CMoney LSTM）、`docs/02_sentiment.md`（指向研究八）、`docs/prereg/PREREGISTRATION.md`（新增第 19～25 組）。
+- **簡報 v20（10-20，使用者授權自行安排）**：`ppt_build/final_report_v20.pptx`（29 頁；`build_deck_v20.js` 由 `_make_v20.py` 從 v19 產生；預覽 `qa_images_v20/`）＋`講稿_v20.md`。改動：第 3 頁 CMoney 179 萬篇、2020–2025；第 5 頁補 CMoney LSTM（10.64% → 10.56%、天真 1.33%）；第 8 頁 CMoney 列指向下一頁；**新增第 9 頁「換一個平台：CMoney 測得到一點，但一樣賺不到錢」**（4 個數字卡＋選股策略表＋洩漏說明）；平台頁情緒模組加「散戶極度悲觀」提示；之後頁碼 +1（待討論頁的「C 段第 17、18 頁」已改）。講稿 v20：第 5 頁、A 段 CMoney 段落、各段頁碼、新增兩題追問（CMoney 為何不拿來選股、為何只有 2020 後）。v19 沒動。
 
 **現況**
-- 沒有分析在跑，也沒有任何排程。**2026-10-15 使用者決定 GitHub 改手動同步**：已刪除 `PTT_github_sync` 排程；做完分析或改完簡報後執行 `bash sync_github.sh`（在 `D:\專題claude`）。
-- 分析已收斂（使用者同意不再找新檢驗）。最後一輪做完：週頻選股（W1 t=1.77 未過、W2 未過）。
-- **報告用：簡報 `ppt_build/final_report_v19.pptx`（28 頁）＋講稿 `ppt_build/講稿_v19.md`**。使用者還要過精簡講稿（只講有結果的部分，在聊天中給過，未存檔）。
+- 沒有分析在跑，也沒有任何排程（所有 PTT_* 排程都已刪）。GitHub 手動同步：`bash sync_github.sh`（在 `D:\專題claude`）。**注意**：`cmoney_full/*labels*.csv` 含貼文原文，不可放進 GitHub（10-19 曾誤複製到本地 repo、被防護擋下、已刪）。
+- CMoney token 10-19 17:52 更新、約 10-20 17:50 到期；之後要抓 CMoney 需使用者重新取 token（步驟見 `docs/09_cmoney.md` 2.1）。
+- **報告用：簡報 `ppt_build/final_report_v20.pptx`（29 頁）＋講稿 `ppt_build/講稿_v20.md`**（v19 仍保留）。使用者還要過精簡講稿（只講有結果的部分，在聊天中給過，未存檔）。
+- 使用者 10-19 的定位：CMoney 只有 2020 年後（平台沒更早的資料），十年主分析是 PTT＋TEJ；我建議**不擴大股票池**（擴大是為了「贏大盤」，偏離題目「交易資訊平台」，使用者之前否決過選股排序），使用者沒有要求擴大。
 - 使用者選讀論文＝Jing, Wu & Wang 2021（`C:\Users\terry\Downloads\jing2021.pdf`）；專題**沒有「原型論文」**，不要再寫「原論文／原型」。7 月概念驗證簡報＝`Downloads\2330_技術面情緒面整合分析_簡報_v2 (1).pptx`。
 
 **GitHub（使用者要求做成跟組員一樣詳細的專案包並即時同步）**
 - 私人 repo：https://github.com/hsun1202/stock-sentiment-platform ；本地 `D:\專題claude_github`。
-- 手寫文件（**不會自動更新，有新結果要手動補**）：`README.md`（中英、結論總表、執行、平台、限制）、`docs/01_replication.md`～`07_market_level.md`（各研究）、`docs/08_data_collection.md`（資料取得與坑）、`docs/prereg/PREREGISTRATION.md`（19 組約 50 個事先登記假說與結果）。
+- 手寫文件（**不會自動更新，有新結果要手動補**）：`README.md`（中英、結論總表、執行、平台、限制）、`docs/01_replication.md`～`07_market_level.md`（各研究）、`docs/08_data_collection.md`（資料取得與坑）、`docs/01`～`10`（各研究；09＝CMoney、10＝季頻高低波動）、`docs/prereg/PREREGISTRATION.md`（25 組事先登記假說與結果）。
 - 自動更新：`code/`（全部程式＋`make_code_index.py` 產生的 `code/INDEX.md`）、`results/`、`docs/PROJECT_STATUS.md`、`slides/`（版本號最大的簡報與講稿）。
 - 組員 repo（公開）：https://github.com/jameschen108/tw-stock-sentiment —— 四個研究：情緒不能預測報酬、[標的] 文作者追漲、**開盤前討論量能預測當天成交量（兩次樣本外通過）**、**開盤前討論量能預告大漲跌（t=4.61）**、LLM 歸因過半大漲跌找不到原因、沒新聞大漲跌之後沒有明顯反轉（與我們含漲停時一致；我們剔除收漲停後才看到回吐）、開盤前情緒稍微預告盤中方向（t=2.08）。他的程式是套件＋測試＋每研究一份登記文件。
 
