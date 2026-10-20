@@ -5,8 +5,6 @@
 大學專題：以台股十年、全市場的資料，檢驗「市場情緒」能不能預測股價，以及情緒應該怎麼放進一個「技術面＋情緒」的交易資訊平台。
 後期每個檢驗都先把假設與通過門檻寫定，再在沒看過的股票或年份上驗證；通過與未通過都照實記錄。
 
-組員專案（PTT 開盤前討論量、大漲跌日的 LLM 歸因）：[jameschen108/tw-stock-sentiment](https://github.com/jameschen108/tw-stock-sentiment)
-
 ## 背景
 
 - **選讀論文**：Jing, Wu & Wang（2021）*A hybrid model integrating deep learning with investor sentiment analysis for stock price prediction*，Expert Systems with Applications 178, 115019。用東方財富股吧 88 萬則貼文的情緒加上 16 項技術指標，以 LSTM 預測隔天收盤價，加入情緒後 MAPE 0.0675 → 0.0449。是本專題「技術面＋情緒雙軌整合」平台的依據。
