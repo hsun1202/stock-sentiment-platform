@@ -25,6 +25,10 @@ done
 mkdir -p "$DST/results/cmoney_full"
 cp -u "$SRC"/cmoney_full/*.py "$SRC"/cmoney_full/*.sh "$DST/code/" 2>/dev/null || true
 cp -u "$SRC"/cmoney_full/*.log "$SRC"/cmoney_full/*.md "$SRC"/cmoney_full/*.json "$DST/results/cmoney_full/" 2>/dev/null || true
+# AI 選股策略驗證
+mkdir -p "$DST/results/ai_strategies"
+cp -u "$SRC"/ai_strategies/*.py "$DST/code/" 2>/dev/null || true
+cp -u "$SRC"/ai_strategies/*.md "$SRC"/ai_strategies/*.log "$DST/results/ai_strategies/" 2>/dev/null || true
 # 紙上模擬交易（只放程式與說明；行情、帳戶狀態、報告不放）
 mkdir -p "$DST/code/papertrade"
 cp -u "$SRC"/papertrade/*.py "$SRC"/papertrade/README.md "$DST/code/papertrade/" 2>/dev/null || true
