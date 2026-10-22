@@ -10,8 +10,16 @@
 - 照他的規格用 TEJ 重跑（`quarterly_vol/quarterly_vol_cookman.py`／`.log`，2015Q3–2025Q4、42 季，含息、含下市）：高波動 30 檔 +18.2%（波動 37.9%、回落 −42.9%、Sharpe 0.62）、低波動 30 +7.8%、母體等權 +12.4%、市值加權 +15.9%、0050 含息 +17.2%（Sharpe 0.93）；高波動 − 母體 +2.38%/季（t=1.45）、− 0050 +1.33%/季（t=0.58）；beta≈1.24。→ 方向一致、期間短所以不顯著、贏的是風險。已寫進 GitHub `docs/10_quarterly_volatility.md`（「照組員的規格重跑」一節）與 README 研究九。
 - 注意：README 原本連結的組員 repo（jameschen108）使用者 10-20 要求刪掉連結（已刪，只留「與組員的研究對照」文字）；cookman123 這份目前沒有放連結。
 
+**2026-10-22 紙上模擬交易（使用者：「現在想嘗試做量化交易」→ 選「先紙上模擬」＋「建一套自動化流程」）** `papertrade/`（說明 `papertrade/README.md`）
+- 每個交易日 18:30 工作排程器 `PTT_papertrade_daily`（pythonw 跑 `papertrade/run_daily.py`，工作目錄 `D:\專題claude`；錯過會在開機後補跑，程式也會自動補齊漏掉的交易日）。紀錄 `papertrade/run.log`；報告 `papertrade/report/index.html`＋`nav.png`。
+- 資料：證交所公開 API（MI_INDEX 每日行情、TWT49U 除權息、FMTQIK 交易日曆），原始 JSON 快取 `papertrade/raw/`，面板 `data/prices.csv`（第一次往回補 90 個交易日：2026-06-12～10-22，1,389 檔）。**只含上市股**（上櫃之後再加）。
+- 策略（`strategies.py`）：`highvol30`（近 60 日成交金額前 250 名中 60 日波動最高 30 檔，等權，季換＝組員規格）、`lowvol30`、`ew250`、`etf0050`（買進持有）。季換＝每季第一個交易日收盤出訊號、隔天開盤成交。
+- 模擬（`broker.py`）：虛擬本金每策略 1,000 萬（100 萬時高價股買不到整數股、閒置 8%）；隔天開盤成交、先賣後買；開盤漲跌幅 ≥9.5% 視為買不到／賣不掉、隔天重試；手續費 0.1425%×6 折、證交稅股票 0.3%／ETF 0.1%；除權息：前一天收盤持有者記（前收 − 參考價）× 股數為現金（測試時抓到「除息日當天開盤買也領股利」的 bug，已改成先算除權息再成交）。
+- 狀態：2026-10-22 開帳（訊號已出），**10-23 開盤第一次建倉**。測試模式：`python papertrade/run_daily.py --test-from 2026-08-14`（結果在 test_state/、test_report/，用完刪）。
+- 可以再加的：上櫃股、月頻技術面＋散戶行為選股（要用公開資料重建特徵）、CMoney「散戶極度悲觀」避開清單（需要每天抓 CMoney，token 要使用者給）、報告發佈成 Artifact 方便手機看。
+
 **現況**
-- 沒有分析在跑，也沒有任何排程（所有 PTT_* 排程都已刪）。GitHub 手動同步：`bash sync_github.sh`（在 `D:\專題claude`）。**注意**：`cmoney_full/*labels*.csv` 含貼文原文，不可放進 GitHub（10-19 曾誤複製到本地 repo、被防護擋下、已刪）。
+- 沒有分析在跑。**排程只有 `PTT_papertrade_daily`（紙上模擬，每個交易日 18:30）**，其他 PTT_* 都已刪。GitHub 手動同步：`bash sync_github.sh`（在 `D:\專題claude`）。**注意**：`cmoney_full/*labels*.csv` 含貼文原文，不可放進 GitHub（10-19 曾誤複製到本地 repo、被防護擋下、已刪）。
 - CMoney token 10-19 17:52 更新、約 10-20 17:50 到期；之後要抓 CMoney 需使用者重新取 token（步驟見 `docs/09_cmoney.md` 2.1）。
 - **報告用：簡報 `ppt_build/final_report_v20.pptx`（29 頁）＋講稿 `ppt_build/講稿_v20.md`**（v19 仍保留）。使用者還要過精簡講稿（只講有結果的部分，在聊天中給過，未存檔）。
 - 使用者 10-19 的定位：CMoney 只有 2020 年後（平台沒更早的資料），十年主分析是 PTT＋TEJ；我建議**不擴大股票池**（擴大是為了「贏大盤」，偏離題目「交易資訊平台」，使用者之前否決過選股排序），使用者沒有要求擴大。

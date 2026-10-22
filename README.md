@@ -102,6 +102,10 @@ cd slides && npm install && node build_deck_v20.js
 環境：Python 3.10；部分模型用 NVIDIA GPU（XGBoost `device="cuda"`、BERT、Breeze）；簡報用 Node.js＋pptxgenjs。
 本專案沒有自動測試（程式未寫成套件）；正確性靠事先登記、樣本外驗證、與 TEJ 交叉核對資料。
 
+## 紙上模擬交易（2026-10-22 起）
+
+用證交所每天公布的真實行情，自動產生訊號、隔天開盤模擬成交、記錄各策略的虛擬部位與淨值（不動真錢、不下單）。目前跑 4 個策略：高波動 30 檔（組員 DAViS 研究的規格，季換）、低波動 30 檔、前 250 名等權、0050 買進持有。每個交易日 18:30 自動執行。說明與程式：[code/papertrade/README.md](code/papertrade/README.md)。
+
 ## 平台設計
 
 | 模組 | 內容 | 依據 |

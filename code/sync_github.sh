@@ -25,6 +25,9 @@ done
 mkdir -p "$DST/results/cmoney_full"
 cp -u "$SRC"/cmoney_full/*.py "$SRC"/cmoney_full/*.sh "$DST/code/" 2>/dev/null || true
 cp -u "$SRC"/cmoney_full/*.log "$SRC"/cmoney_full/*.md "$SRC"/cmoney_full/*.json "$DST/results/cmoney_full/" 2>/dev/null || true
+# 紙上模擬交易（只放程式與說明；行情、帳戶狀態、報告不放）
+mkdir -p "$DST/code/papertrade"
+cp -u "$SRC"/papertrade/*.py "$SRC"/papertrade/README.md "$DST/code/papertrade/" 2>/dev/null || true
 mkdir -p "$DST/results/quarterly_vol"
 cp -u "$SRC"/quarterly_vol/*.py "$DST/code/" 2>/dev/null || true
 cp -u "$SRC"/quarterly_vol/*.log "$SRC"/quarterly_vol/*.png "$SRC"/quarterly_vol/*.md "$SRC"/quarterly_vol/quarterly_vol_returns.csv "$DST/results/quarterly_vol/" 2>/dev/null || true
