@@ -38,6 +38,8 @@ latest=$(ls "$SRC"/ppt_build/build_deck_v*.js | sed -E 's/.*_v([0-9]+)\.js/\1/' 
 cp -u "$SRC/ppt_build/build_deck_v$latest.js" "$SRC/ppt_build/package.json" "$DST/slides/"
 [ -f "$SRC/ppt_build/final_report_v$latest.pptx" ] && cp -u "$SRC/ppt_build/final_report_v$latest.pptx" "$DST/slides/"
 [ -f "$SRC/ppt_build/講稿_v$latest.md" ] && cp -u "$SRC/ppt_build/講稿_v$latest.md" "$DST/slides/"
+# 簡報用的紙上模擬素材（淨值圖與數字；build_deck_v21 起會讀）
+mkdir -p "$DST/slides/assets" && cp -u "$SRC"/ppt_build/assets/papertrade_* "$DST/slides/assets/" 2>/dev/null || true
 
 # 5) 程式索引（自動依每支程式的開頭說明產生）
 PYTHONUTF8=1 python "$SRC/make_code_index.py" "$(cygpath -m "$DST")" >/dev/null 2>&1 || log "程式索引產生失敗（不影響同步）"

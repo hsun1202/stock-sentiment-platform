@@ -18,10 +18,14 @@
 - 狀態：2026-10-22 開帳（訊號已出），**10-23 開盤第一次建倉**。測試模式：`python papertrade/run_daily.py --test-from 2026-08-14`（結果在 test_state/、test_report/，用完刪）。
 - 可以再加的：上櫃股、月頻技術面＋散戶行為選股（要用公開資料重建特徵）、CMoney「散戶極度悲觀」避開清單（需要每天抓 CMoney，token 要使用者給）、報告發佈成 Artifact 方便手機看。
 
+**2026-10-22 紙上模擬放進報告（使用者選「平台功能＋一頁簡報」；報告日 2026-12-17）**
+- **簡報 v21**（`ppt_build/final_report_v21.pptx`，30 頁；`build_deck_v21.js` 由 `_make_v21.py` 從 v20 產生）：新增第 22 頁「平台功能：策略前向測試——把回測過的規則放到真正的未來」（左：四步流程＋說明；右：淨值圖＋各策略累積報酬／相對 0050／最大回落）。圖和數字讀 `ppt_build/assets/papertrade_nav.png`、`papertrade_summary.json`，由 `papertrade/export_slides.py` 產生，**每天 run_daily 跑完自動更新**（測試模式不覆蓋）。講稿 v21：D 段加第 22 頁段落（【】處照當天投影片唸）、追問「紙上模擬幾週能說明什麼」、頁碼更新（附錄改第 24 頁以後）。v20 沒動。
+- **報告前（12 月中）要做**：`node ppt_build/build_deck_v21.js` 重建簡報（素材每天已自動更新），檢查第 22 頁數字，照數字補講稿【】處。到時約 8 週、尚未季換股（下次換股 2027-01 第一個交易日）。
+
 **現況**
 - 沒有分析在跑。**排程只有 `PTT_papertrade_daily`（紙上模擬，每個交易日 18:30）**，其他 PTT_* 都已刪。GitHub 手動同步：`bash sync_github.sh`（在 `D:\專題claude`）。**注意**：`cmoney_full/*labels*.csv` 含貼文原文，不可放進 GitHub（10-19 曾誤複製到本地 repo、被防護擋下、已刪）。
 - CMoney token 10-19 17:52 更新、約 10-20 17:50 到期；之後要抓 CMoney 需使用者重新取 token（步驟見 `docs/09_cmoney.md` 2.1）。
-- **報告用：簡報 `ppt_build/final_report_v20.pptx`（29 頁）＋講稿 `ppt_build/講稿_v20.md`**（v19 仍保留）。使用者還要過精簡講稿（只講有結果的部分，在聊天中給過，未存檔）。
+- **報告用：簡報 `ppt_build/final_report_v21.pptx`（30 頁）＋講稿 `ppt_build/講稿_v21.md`**（v19、v20 仍保留）。使用者還要過精簡講稿（只講有結果的部分，在聊天中給過，未存檔）。
 - 使用者 10-19 的定位：CMoney 只有 2020 年後（平台沒更早的資料），十年主分析是 PTT＋TEJ；我建議**不擴大股票池**（擴大是為了「贏大盤」，偏離題目「交易資訊平台」，使用者之前否決過選股排序），使用者沒有要求擴大。
 - 使用者選讀論文＝Jing, Wu & Wang 2021（`C:\Users\terry\Downloads\jing2021.pdf`）；專題**沒有「原型論文」**，不要再寫「原論文／原型」。7 月概念驗證簡報＝`Downloads\2330_技術面情緒面整合分析_簡報_v2 (1).pptx`。
 

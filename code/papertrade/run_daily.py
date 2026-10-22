@@ -22,6 +22,11 @@ def log(msg):
     open(os.path.join(BASE, "run.log"), "a", encoding="utf-8").write(line + "\n")
 
 
+def broker_state_is_real():
+    import broker
+    return os.path.basename(broker.STATE) == "state"      # 測試模式（test_state）不覆蓋簡報素材
+
+
 def quarter(d):
     t = pd.Timestamp(d)
     return (t.year, (t.month - 1) // 3)
@@ -73,6 +78,12 @@ def main(report_only=False, start=None):
     r = report.build(names)
     if r is not None:
         log("[報告] " + "｜".join(f"{x['策略'][:6]} {x['累積報酬']}" for _, x in r.iterrows()))
+    if broker_state_is_real():
+        try:
+            import export_slides
+            export_slides.export()                         # 給簡報用的淨值圖與數字（ppt_build/assets/）
+        except Exception as e:                             # 匯出失敗不影響模擬本身
+            log(f"[簡報匯出] 失敗：{type(e).__name__}: {e}")
     log("DONE")
 
 
