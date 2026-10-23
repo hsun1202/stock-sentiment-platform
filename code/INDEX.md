@@ -275,12 +275,14 @@
 
 | 程式 | 用途 |
 |---|---|
+| `fetch_twse_2026.py` | H 節：抓 2025-09-01～2026-10-22 證交所公開資料（每日行情 MI_INDEX、除權息 TWT49U），沿用 papertrade/tw_data.py 的快取（papertrade/raw/）。 輸出 ai_strategies/twse_2026_prices.csv、twse_2026_exright.csv。 cd D:/專題claude && PYTHONIOENCODING=utf-8 python ai… |
 | `inst_beat0050_backtest.py` | E 節：法人籌碼（投信、外資、自營買賣超）加進月頻選股＋透明規則「投信買超前 30 檔」。 F 節：以贏 0050 為目標——市值前 50 大、照市值再依 A 模型分數調權重。 事先寫定見 PREREG_ai_strategies.md E、F 節。面板與規格沿用 ml_monthly_backtest.py（執行它「模型」之前的部分）。 cd D:/專題claude && python ai_strategies/inst_beat0… |
 | `lowfreq_cm.py` | 把交易拉長：週頻、月頻選股，看 CMoney（與 PTT）情緒在「技術面＋散戶行為」之上有沒有增量。事先寫定見 PREREG_cmoney_full.md 第 D 節。 做法同 weekly_fullmarket_strategy.py / monthly_fullmarket_strategy.py；股票＝265 檔（CMoney 有資料）、期間 2020–2024、測試 2022–2024。 |
 | `lowfreq_fm_check.py` | 事後探索（看到 lowfreq_cm 單一變數 IC 後才追加）：CMoney 討論量／淨情緒對下期報酬的效果，控制規模、成交值、波動、動能後還在不在？ 每期橫斷面迴歸（變數先轉成橫斷面排名再標準化），Fama-MacBeth 平均係數與 t。 |
 | `lowfreq_net_sort.py` | 事後探索：依 CMoney 當期淨情緒分 5 組，看下期報酬（不用模型、不需訓練，所以 2020–2024 全期都能看；但規則是看到 IC 後才挑的，要標明）。 |
 | `ml_fund_backtest.py` | 財報特徵加進機器學習月頻選股（事先寫定見 PREREG_ai_strategies.md D 節）。 面板與規格沿用 ml_monthly_backtest.py（直接執行它「模型」之前的部分），再接上只用「發布日早於訊號日」的財報特徵。 cd D:/專題claude && python ai_strategies/ml_fund_backtest.py |
 | `ml_monthly_backtest.py` | AI 選股（機器學習月頻）上線前驗證：照上線時的實際規格回測。事先寫定見 PREREG_ai_strategies.md A、B 節。 上市普通股、只用公開資料算得出的特徵、每月第一個交易日收盤出訊號、第二個交易日開盤成交、扣成本；測試 2018–2025。 另外：情緒過濾（剔除 CMoney 淨情緒最悲觀 20%），2020–2025。 cd D:/專題claude && python ai_strategies/ml_monthly… |
+| `oos2026_surprise.py` | H 節：G 節（月營收驚喜、盈餘驚喜）的 2026 年樣本外。事先寫定見 PREREG_ai_strategies.md H 節。 2025 以前的事件（決定門檻用）沿用 TEJ 股價；2025-10 起的事件與 2026 年的報酬改用證交所公開資料（fetch_twse_2026.py 抓的）。 cd D:/專題claude && PYTHONIOENCODING=utf-8 python ai_strategies/oos2026_… |
 | `oos_2025.py` | 2025 年真正樣本外：CMoney 淨情緒對下期報酬（事先寫定見 PREREG_cmoney_full.md 第 E 節）。 變數、分組、Fama-MacBeth 完全照 lowfreq_net_sort.py／lowfreq_fm_check.py；資料 final_dataset_v3_cm3x（2025＝build_2025.py）。 樣本外＝下期報酬落在 2025 年的期間：月頻形成月 2024-12 ~ 2025-11（12… |
 | `quarterly_vol.py` | 季頻高低波動選股 vs 大盤（不扣手續費）。事先寫定的假說見 PREREG_quarterly_vol.md。 每季底依過去 3 個月日報酬標準差分 5 組、等權、持有一季；和 0050 含息、^TWII、市值加權比。 cd D:/專題claude && python quarterly_vol/quarterly_vol.py |
 | `quarterly_vol_cookman.py` | 照組員規格重跑：每季底在成交金額前 250 名中，買近 60 日波動最高 30 檔（與最低 30 檔）、等權、持有一季。 TEJ 還原價（含息）、含下市；比較：母體等權、母體市值加權、0050 含息、加權指數（不含息）。只報數字。 cd D:/專題claude && python quarterly_vol/quarterly_vol_cookman.py |
