@@ -275,6 +275,7 @@
 
 | 程式 | 用途 |
 |---|---|
+| `inst_beat0050_backtest.py` | E 節：法人籌碼（投信、外資、自營買賣超）加進月頻選股＋透明規則「投信買超前 30 檔」。 F 節：以贏 0050 為目標——市值前 50 大、照市值再依 A 模型分數調權重。 事先寫定見 PREREG_ai_strategies.md E、F 節。面板與規格沿用 ml_monthly_backtest.py（執行它「模型」之前的部分）。 cd D:/專題claude && python ai_strategies/inst_beat0… |
 | `lowfreq_cm.py` | 把交易拉長：週頻、月頻選股，看 CMoney（與 PTT）情緒在「技術面＋散戶行為」之上有沒有增量。事先寫定見 PREREG_cmoney_full.md 第 D 節。 做法同 weekly_fullmarket_strategy.py / monthly_fullmarket_strategy.py；股票＝265 檔（CMoney 有資料）、期間 2020–2024、測試 2022–2024。 |
 | `lowfreq_fm_check.py` | 事後探索（看到 lowfreq_cm 單一變數 IC 後才追加）：CMoney 討論量／淨情緒對下期報酬的效果，控制規模、成交值、波動、動能後還在不在？ 每期橫斷面迴歸（變數先轉成橫斷面排名再標準化），Fama-MacBeth 平均係數與 t。 |
 | `lowfreq_net_sort.py` | 事後探索：依 CMoney 當期淨情緒分 5 組，看下期報酬（不用模型、不需訓練，所以 2020–2024 全期都能看；但規則是看到 IC 後才挑的，要標明）。 |
