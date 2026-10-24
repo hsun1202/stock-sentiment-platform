@@ -32,6 +32,9 @@ cp -u "$SRC"/ai_strategies/*.md "$SRC"/ai_strategies/*.log "$DST/results/ai_stra
 # 紙上模擬交易（只放程式與說明；行情、帳戶狀態、報告不放）
 mkdir -p "$DST/code/papertrade"
 cp -u "$SRC"/papertrade/*.py "$SRC"/papertrade/README.md "$DST/code/papertrade/" 2>/dev/null || true
+# 平台資料（只放程式與說明；行情、營收快照、輸出名單不放）
+mkdir -p "$DST/code/platform_feed"
+cp -u "$SRC"/platform_feed/*.py "$SRC"/platform_feed/README.md "$DST/code/platform_feed/" 2>/dev/null || true
 mkdir -p "$DST/results/quarterly_vol"
 cp -u "$SRC"/quarterly_vol/*.py "$DST/code/" 2>/dev/null || true
 cp -u "$SRC"/quarterly_vol/*.log "$SRC"/quarterly_vol/*.png "$SRC"/quarterly_vol/*.md "$SRC"/quarterly_vol/quarterly_vol_returns.csv "$DST/results/quarterly_vol/" 2>/dev/null || true
