@@ -275,6 +275,7 @@
 
 | 程式 | 用途 |
 |---|---|
+| `double_surprise.py` | J 節：雙重驚喜（季報 SUE 最高 10% 且 季營收驚喜 SURq 最高 10%）vs 只有盈餘驚喜。事先寫定見 PREREG_ai_strategies.md J 節。 2018–2025 用 TEJ 股價（同 G 節）；2026 用 H 節的證交所公開資料。 cd D:/專題claude && PYTHONIOENCODING=utf-8 python ai_strategies/double_surprise.py |
 | `fetch_twse_2026.py` | H 節：抓 2025-09-01～2026-10-22 證交所公開資料（每日行情 MI_INDEX、除權息 TWT49U），沿用 papertrade/tw_data.py 的快取（papertrade/raw/）。 輸出 ai_strategies/twse_2026_prices.csv、twse_2026_exright.csv。 cd D:/專題claude && PYTHONIOENCODING=utf-8 python ai… |
 | `inst_beat0050_backtest.py` | E 節：法人籌碼（投信、外資、自營買賣超）加進月頻選股＋透明規則「投信買超前 30 檔」。 F 節：以贏 0050 為目標——市值前 50 大、照市值再依 A 模型分數調權重。 事先寫定見 PREREG_ai_strategies.md E、F 節。面板與規格沿用 ml_monthly_backtest.py（執行它「模型」之前的部分）。 cd D:/專題claude && python ai_strategies/inst_beat0… |
 | `lowfreq_cm.py` | 把交易拉長：週頻、月頻選股，看 CMoney（與 PTT）情緒在「技術面＋散戶行為」之上有沒有增量。事先寫定見 PREREG_cmoney_full.md 第 D 節。 做法同 weekly_fullmarket_strategy.py / monthly_fullmarket_strategy.py；股票＝265 檔（CMoney 有資料）、期間 2020–2024、測試 2022–2024。 |
@@ -292,6 +293,7 @@
 | `sent_strategies.py` | 用 CMoney 淨情緒選股的 7 種策略（事先寫定見 PREREG_cmoney_full.md 第 F 節；清單、參數不增不改）。 CM_TAG=cm3 → 只有 2020–2024（樣本內）；CM_TAG=cm3x → 2020–2025，另外單獨報 2025（樣本外，主要檢定 S2、S7）。 |
 | `surprise_event_backtest.py` | G 節：財報公布後追價——月營收驚喜（SUR，持有 20 天）、季報盈餘驚喜（SUE，持有 60 天）。 事先寫定見 PREREG_ai_strategies.md G 節。公布日之後第一個交易日開盤買、持有 H 個交易日後開盤賣；每天等權、開盤到開盤；扣成本。 cd D:/專題claude && PYTHONIOENCODING=utf-8 python ai_strategies/surprise_event_backtest.py |
 | `surprise_event_checks.py` | G 節結果的事後檢查（看到結果後才加，要如實標明）： 1) TEJ 營收發布日 vs 公開資訊觀測站重大訊息裡的「營收」公告時間（有沒有用到公布前的資訊） 2) 公布前（進場前 5 天）是否已經漲；3) 依市值分大型／其他。 cd D:/專題claude && PYTHONIOENCODING=utf-8 python ai_strategies/surprise_event_checks.py |
+| `surprise_robust.py` | I 節：G 節兩個策略的穩健性與對 0050 的 α／β（看過 G、H 結果後才加，只報數字）。 參考組員 jameschen108/tw-stock-quant 的 robust.py：成本加倍、持有天數、門檻、分段、對 0050 的 α／β（Newey-West t，lag 3）。 cd D:/專題claude && PYTHONIOENCODING=utf-8 python ai_strategies/surprise_robus… |
 | `xgb_direction_cm.py` | XGBoost 隔天開盤→收盤漲跌：CMoney 貼文情緒 vs PTT，同一批 265 檔、同一段 2020-2024。 設定同 retail_test_v4.py（features_v4.build 的技術面特徵與目標 B、XGB 超參數、依週 bootstrap），只改： 只用 2020 以後的資料（CMoney 只有這段）、測試年 2022-2024、多一組 +CMoney。事先寫定的假說見 cmoney_full/PREREG… |
 | `xgb_leak_check.py` | 檢查 xgb_direction_cm.py 的 +CMoney 是否來自抽樣洩漏（事後追加的檢查，2026-10-19，看到 X1 通過後才寫——要如實標註）。 疑慮：CMoney 爬蟲每個交易日只抓「收盤前最後 20 篇」。t+1 開盤前的貼文有沒有被抓到，取決於 t+1 盤中貼文多不多（盤中熱 → 開盤前的被擠掉）， 而 t+1 盤中熱不熱鬧跟 t+1 漲跌有關 → 「t+1 開盤前」特徵偷看到了 t+1 的資訊。PTT 是全量抓… |
 | `xgb_strategy_cm.py` | 拿 XGBoost 漲跌模型（技術面 vs +CMoney，cm3）去預測隔天開盤→收盤的漲跌與報酬，並做當沖回測。事先寫定見 PREREG_cmoney_full.md 第 C 節。 模型、特徵、切法同 xgb_direction_cm.py（測試 2022–2024、5 seeds）。 |
