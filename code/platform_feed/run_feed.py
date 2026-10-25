@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """
-平台資料每日更新（收盤後跑）：①補證交所每日行情 ②公開資訊觀測站月營收、季報快照 ③重算營收驚喜、盈餘驚喜名單。
+平台資料每日更新（收盤後跑）：①補證交所每日行情 ②公開資訊觀測站月營收、季報快照 ③重算營收驚喜、盈餘驚喜名單
+④PTT Stock 板最近 3 天的文章與留言 → 情緒分類 → 市場與個股情緒。
 行情用 papertrade/tw_data.py 的抓取與快取（同一份 raw 快取，不會重複請求），但寫到自己的 platform_feed/data/prices.csv。
 紀錄 platform_feed/run.log。
 cd D:/專題claude && python platform_feed/run_feed.py
@@ -10,7 +11,13 @@ import os
 import sys
 import traceback
 
-import pandas as pd
+if sys.stdout is None or sys.stderr is None:                            # 工作排程器用 pythonw 跑：沒有主控台，進度條會出錯
+    sys.stdout = sys.stderr = open(os.devnull, "w", encoding="utf-8")
+os.environ.setdefault("HF_HUB_OFFLINE", "1")
+os.environ.setdefault("HF_HUB_DISABLE_PROGRESS_BARS", "1")
+os.environ.setdefault("TRANSFORMERS_VERBOSITY", "error")
+
+import pandas as pd  # noqa: E402
 
 BASE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, BASE)
@@ -18,6 +25,8 @@ sys.path.insert(0, os.path.join(os.path.dirname(BASE), "papertrade"))
 import earnings_signals  # noqa: E402
 import mops_earnings  # noqa: E402
 import mops_revenue  # noqa: E402
+import ptt_daily  # noqa: E402
+import ptt_sentiment  # noqa: E402
 import revenue_signals  # noqa: E402
 import tw_data  # noqa: E402
 
@@ -44,7 +53,8 @@ def update_prices():
 
 if __name__ == "__main__":
     for step in (update_prices, lambda: mops_revenue.update(log=log), lambda: mops_earnings.update(log=log),
-                 lambda: revenue_signals.build(log=log), lambda: earnings_signals.build(log=log)):
+                 lambda: revenue_signals.build(log=log), lambda: earnings_signals.build(log=log),
+                 lambda: ptt_daily.update(days=3, log=log), lambda: ptt_sentiment.build(log=log)):
         try:
             step()
         except Exception:

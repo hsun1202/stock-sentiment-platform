@@ -23,6 +23,16 @@ for nm, sig in [("營收", rev), ("盈餘", ern)]:
             if r["code"] == code:
                 labels.append((r["label"], f"{r['period']}・{r['announce_date']} 公布・持有到 {r['exit_date']}・驚喜分數 {r['surprise']:+.2f}"))
 
+sent = common.signals("sentiment_stocks")
+sser = pd.DataFrame(sent.get("series", {}).get(code, []))
+if len(sser):
+    sser["date"] = pd.to_datetime(sser.date)
+    s_last = sser.iloc[-1]
+    sent_txt = (f"{s_last.date:%m-%d} 留言 {int(s_last.n)} 則、淨情緒 " + ("—" if pd.isna(s_last.net) else f"{s_last.net:+.0%}")
+                + f"；近期有討論 {len(sser)} 天")
+else:
+    sent_txt = "近期 PTT 沒有以這檔為標題的討論"
+
 # ---------------------------------------------------------------- 標頭
 close = p.close.dropna()
 chg = close.iloc[-1] / close.iloc[-2] - 1 if len(close) >= 2 else None
@@ -37,7 +47,7 @@ st.markdown(
     f'<div class="meta">資料日 {close.index[-1]:%Y-%m-%d}・證交所收盤價（未還原）</div>'
     f'<div class="row"><span class="k">近一年</span>{lo:,.2f} – {hi:,.2f}<div class="range"><i style="left:calc({pos:.0f}% - 1px)"></i></div></div></div>'
     f'<div class="right"><div class="row"><b>財報訊號</b></div>{lab_html}'
-    f'<div class="row"><span class="badge muted">情緒</span><span style="opacity:.65;font-size:.78rem">尚未每日更新</span></div></div></div>',
+    f'<div class="row"><span class="badge muted">PTT 情緒</span><span style="opacity:.65;font-size:.78rem">{common.esc(sent_txt)}</span></div></div></div>',
     unsafe_allow_html=True)
 
 t1, t2, t3, t4 = st.tabs(["股價", "月營收", "季報", "情緒"])
@@ -101,5 +111,19 @@ with t3:
                          ("本季門檻", f"{ern['thresholds']['p90']:+.2f}", "高於此＝盈餘驚喜")])
 
 with t4:
-    common.empty("情緒資料（PTT、CMoney 討論量與散戶情緒）尚未每日更新，之後補上。研究結論：情緒能描述市場，但不能預測報酬；"
-                 "CMoney「散戶極度悲觀」之後報酬較差，適合當提醒標籤。")
+    st.info(sent.get("note") or "情緒只當描述，不是買賣訊號。")
+    if not len(sser):
+        common.empty("近期 PTT Stock 板沒有標題提到這檔的文章（每日爬蟲從 2026-08 起）。")
+    else:
+        fig = go.Figure()
+        fig.add_trace(go.Bar(x=sser.date, y=sser.n, name="留言數", marker_color="rgba(148,163,184,.55)", yaxis="y2"))
+        fig.add_trace(go.Scatter(x=sser.date, y=sser.net * 100, name="淨情緒（%）", mode="lines+markers", line=dict(color=common.C_MAIN, width=1.8),
+                                 marker=dict(size=6, color=[common.UP if (v or 0) > 0 else common.DOWN for v in sser.net])))
+        fig.update_layout(yaxis=dict(ticksuffix="%", title="淨情緒"), yaxis2=dict(overlaying="y", side="right", showgrid=False, title="留言數"))
+        common.chart(common.fig_layout(fig, "PTT 討論（標題提到這檔的文章底下的留言，依交易日）", 360))
+        mkd = pd.DataFrame(common.signals("sentiment_market").get("days", []))
+        common.kpis([("最近有討論的一天", f"{s_last.date:%m-%d}", f"留言 {int(s_last.n)} 則"),
+                     ("淨情緒", "—" if pd.isna(s_last.net) else common.signed_html(s_last.net, 0), "（正 − 負）÷（正 + 負）"),
+                     ("同日市場淨情緒", "—" if mkd.empty else common.signed_html(mkd.set_index("date").net.get(f"{s_last.date:%Y-%m-%d}"), 0), "盤中／盤後閒聊"),
+                     ("近期有討論的天數", f"{len(sser)} 天", f"共 {int(sser.n.sum()):,} 則留言")])
+    st.caption("CMoney「散戶極度悲觀」標籤需要 CMoney 的每日資料（token 每天過期），目前沒有接上。")

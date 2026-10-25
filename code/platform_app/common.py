@@ -134,8 +134,12 @@ def header() -> None:
              f'<span class="chip"><b>名單更新</b> {esc(run_at)}</span>',
              f'<span class="chip"><b>營收門檻</b> {esc(rev.get("thresholds", {}).get("month", "—"))}</span>',
              f'<span class="chip"><b>季報門檻</b> {esc(ern.get("thresholds", {}).get("month", "—"))}</span>',
-             '<span class="chip ok">每日 18:50 自動更新</span>' if ok else '<span class="chip bad">最近一次更新有問題</span>',
-             '<span class="chip warn">情緒資料尚未每日更新</span>']
+             '<span class="chip ok">每日 18:50 自動更新</span>' if ok else '<span class="chip bad">最近一次更新有問題</span>']
+    mk = signals("sentiment_market")
+    if mk.get("days"):
+        chips.append(f'<span class="chip"><b>PTT 情緒</b> {esc(mk["days"][-1]["date"])}</span>')
+    else:
+        chips.append('<span class="chip warn">還沒有情緒資料</span>')
     st.markdown(f'<div class="sbar">{"".join(chips)}</div><div class="disc">{DISCLAIMER}</div>', unsafe_allow_html=True)
 
 
