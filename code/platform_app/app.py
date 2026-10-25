@@ -16,6 +16,7 @@ st.markdown(common.CSS, unsafe_allow_html=True)
 page = st.navigation([
     st.Page("p1_overview.py", title="今日名單", icon=":material/dashboard:", default=True),
     st.Page("p2_stock.py", title="個股", icon=":material/query_stats:", url_path="stock"),
+    st.Page("p4_trade.py", title="虛擬交易", icon=":material/account_balance_wallet:", url_path="trade"),
     st.Page("p3_research.py", title="研究結果", icon=":material/science:", url_path="research"),
 ], position="top")
 common.header()
